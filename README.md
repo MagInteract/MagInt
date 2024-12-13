@@ -20,13 +20,13 @@ To learn how to use MagInt read the [manual](./magint_manual.pdf)
 
 ### Installation
 
-You can install MagInt via CMake
+You can install MagInt via CMake. An example for the installation bash script is given below. You need to substitute $(TRIQS_ROOT) with another name if you do  not wish to install MagInt in the TRIQS installation directory.  
 
 ```
 rm -rf MagInt.build
 
 # Set this variable to your desired install directory
-INSTALL_PREFIX=$(pwd)/install
+INSTALL_PREFIX=$(TRIQS_ROOT)
 
 # Set the number of cores for the compilation
 NCORES=4
