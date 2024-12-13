@@ -15,7 +15,7 @@ MagInt works with python < 3.12.
 
 ### Documentation & tutorials
 
-To learn how to use MagInt read the [manual](doc/source/_static/magint_manual.pdf)
+To learn how to use MagInt read the [manual](./magint_manual.pdf)
 
 
 ### Installation
