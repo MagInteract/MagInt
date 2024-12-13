@@ -1,0 +1,4 @@
+f90wrap
+python3
+triqs.3.1.x
+lapack
