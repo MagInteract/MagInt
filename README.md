@@ -62,7 +62,7 @@ python /path/to/MagInt/main.py shift_mu
 
 3. Calcualting the Pseudo-Spin basis
 
-For this step a problem-specific script is required, see the documentation for details and some examples in ./examples
+For this step a problem-specific script is required, see the documentation for details and some examples in ./Examples
 
 4.  Calculation of Intersite-exchange-interactions
 
