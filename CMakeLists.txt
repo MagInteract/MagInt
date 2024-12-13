@@ -20,12 +20,12 @@ endif()
 
 # ############
 # Define Project
-project(magint VERSION 3.1.1 LANGUAGES CXX Fortran)
+project(MagInt VERSION 3.0.0 LANGUAGES CXX Fortran)
 get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
 
 # Version number of the application
-set (MAGINT_VERSION "3.1")
-set (MAGINT_RELEASE "3.1.0")
+set (MAGINT_VERSION "3.0")
+set (MAGINT_RELEASE "3.0.0")
 
 # Append triqs installed files to the cmake load path
 list(APPEND CMAKE_MODULE_PATH ${TRIQS_PATH}/share/cmake/Modules)
@@ -65,8 +65,8 @@ endif()
 set(${PROJECT_NAME}_BINARY_DIR ${PROJECT_BINARY_DIR} CACHE STRING "Binary directory of the ${PROJECT_NAME} Project")
 
 # Codes and tests
-add_subdirectory(fortran/magint)
-add_subdirectory(python/magint)
+add_subdirectory(fortran/MagInt)
+add_subdirectory(python/MagInt)
 add_subdirectory(test)
 
 # Documentation
