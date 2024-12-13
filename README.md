@@ -54,7 +54,7 @@ information
 python /path/to/MagInt/main.py dos
 ```
 
-2. Shifting the chemical potential
+2. In the cases, when the chemical potential mu in the calcualated DOS (step 1) is not strictly within the gap but is pinned slightly below/above it, the mu should be shifted by executing 
 
 ```
 python /path/to/MagInt/main.py shift_mu
@@ -62,7 +62,7 @@ python /path/to/MagInt/main.py shift_mu
 
 3. Calcualting the Pseudo-Spin basis
 
-For this step a problem-specific script is required.
+For this step a problem-specific script is required, see the documentation for details and some examples in ./examples
 
 4.  Calculation of Intersite-exchange-interactions
 
