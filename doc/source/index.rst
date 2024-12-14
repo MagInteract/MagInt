@@ -20,7 +20,7 @@ This Python-3 version is based on the  `TRIQS software library <https://triqs.gi
 For installation use the same branch / tag as your triqs installation. More
 information under :ref:`installation`. 
 
-Learn how to use magint in the :ref:`documentation` and the via the :download:`Manual (pdf) <_static/magint_manual.pdf>`.
+Learn how to use magint in the documentation and the via the :download:`Manual (pdf) <_static/magint_manual.pdf>`.
 
 Workflow of a MagInt calculation
 =================================================
@@ -42,5 +42,3 @@ Detailed in the :download:`Manual <_static/magint_manual.pdf>`.
 
    installation
    documentation
-   issues
-   ChangeLog.md

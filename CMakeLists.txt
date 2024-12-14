@@ -48,9 +48,9 @@ if (NOT ${TRIQS_WITH_PYTHON_SUPPORT})
 endif()
 
 # Check that versions are compatible
-if(NOT MAGINT_VERSION EQUAL TRIQS_VERSION)
-  message(FATAL_ERROR "The application version is not compatible with the TRIQS library (TRIQS library version: ${TRIQS_VERSION} while this application version: ${MAGINT_VERSION})")
-endif()
+#if(NOT MAGINT_VERSION EQUAL TRIQS_VERSION)
+#  message(FATAL_ERROR "The application version is not compatible with the TRIQS library (TRIQS library version: ${TRIQS_VERSION} while this application version: ${MAGINT_VERSION})")
+#endif()
 
 
 # Default Install directory to TRIQS_ROOT if not given or invalid.
@@ -70,13 +70,10 @@ add_subdirectory(python/MagInt)
 add_subdirectory(test)
 
 # Documentation
+#option(Build_Documentation "Build documentation" OFF)
+
 option(BUILD_DOC "Build documentation" OFF)
-if(${BUILD_DOC})
-  if(NOT TRIQS_WITH_DOCUMENTATION)
-    message("Error: TRIQS library has not been compiled with its documentation")
-  endif()
+if(BUILD_DOC)
   add_subdirectory(doc)
-endif(${BUILD_DOC})
-
-
+endif()
 

@@ -7,7 +7,7 @@ Installation
 Prerequisites
 -------------
 
-#. The :ref:`TRIQS <triqslibs:welcome>` library, see `TRIQS installation instruction <https://triqs.github.io/triqs/latest/install.html>`_.
+#. The `TRIQS` library, see `TRIQS installation instruction <https://triqs.github.io/triqs/latest/install.html>`_.
 
 #. Make sure to install besides the triqs requirements also the python packages::
 

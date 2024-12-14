@@ -380,13 +380,16 @@ class HubbardI_interact(Solver):
              rotation matrix in spin-orbital basis
         rmat_time_inv: integer
              =1 if the time reversal operation is to be applied together with rotation
+
         Notes:
         ------
         The constructed `ud` block will have twice the rows and columns of the 'up' or 'down' block.
         The top-left and bottom-right quarters of the `ud` matrix correspond to 'up' and 'down' atomic
         levels, respectively.
         Rotation is applied to 'ud' block if the rotation matrix rmat is submitted
+
         """
+
         ealmat = {}
         if 'ud' in eal:
             ealmat['ud']=eal['ud'].copy()

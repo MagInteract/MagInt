@@ -12,6 +12,7 @@ _____________
 
    MagInteract
 
+
 .. _HubbardI_interact:
 
 HubbardI_interact
@@ -21,6 +22,7 @@ ___________________
    :maxdepth: 0
 
    HubbardI_interact
+
 
 .. _HubbardI_solver:
 
@@ -32,6 +34,7 @@ ___________________
 
    HubbardI_solver
 
+
 .. _Multipolar:
 
 Multipolar
@@ -41,6 +44,7 @@ ______________
    :maxdepth: 0
 
    Multipolar
+
 
 .. _Shells:
 
@@ -52,6 +56,7 @@ ___________________
 
    Shells
 
+
 .. _Read_kp_sym:
 
 Read_kp_sym
@@ -61,6 +66,7 @@ ___________________
    :maxdepth: 0
 
    Read_kp_sym
+
 
 .. _Parser:
 
@@ -72,10 +78,22 @@ ___________________
 
    Parser
 
-.. _Utils:
+
+.. _Read_input:
+
+Read Input
+___________________
+
+.. toctree::
+   :maxdepth: 0
+
+   Read_input
+
+
+.. _run_dos:
 
 run_dos
-_______
+_________
 
 .. toctree::
    :maxdepth: 0
@@ -83,8 +101,10 @@ _______
    run_dos
 
 
+.. _run_shift_mu:
+
 run_shift_mu
-_______
+_____________
 
 .. toctree::
    :maxdepth: 0
@@ -92,8 +112,10 @@ _______
    run_shift_mu
 
 
+.. _run_shell:
+
 run_shell
-_______
+__________
 
 .. toctree::
    :maxdepth: 0
@@ -101,14 +123,18 @@ _______
    run_shell
 
 
+.. _run_magint:
+
 run_magint
-_______
+___________
 
 .. toctree::
    :maxdepth: 0
 
    run_magint
 
+
+.. _Utils:
 
 Utils
 _______
