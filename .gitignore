@@ -1,0 +1,7 @@
+
+# Developer files #
+###################
+.envrc
+.idea
+*.sublime-project
+*.sublime-workspace
