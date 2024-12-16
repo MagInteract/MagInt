@@ -1,0 +1,9 @@
+The output of the nn program of Wien2k ( case.outputnn )is used to define lattice vectors forwhich intersite interactions will be calculated by MagInt. 
+
+Some additional information needs to be included into case.outputnn to make it compatible with MagInt. To add it please copy the  patch file  nn.patch to the nn source directory SRC_nn and apply the patch as follows:
+
+>cp nn.patch $WIENROOT/SRC_nn
+>cd $WIENROOT/SRC_nn
+>patch nn.f nn.patch
+>make
+>cp nn ..

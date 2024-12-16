@@ -1,0 +1,61 @@
+--- nn.f	2013-05-14 11:59:29.000000000 +0200
++++ /home/labcpht/pmc/leonid/Wien2k-13/SRC_nn/nn.f	2017-11-13 18:46:18.000000000 +0100
+@@ -61,6 +61,11 @@
+       integer,  allocatable :: iz(:,:),ishell(:),ityp(:),imult(:)
+       CHARACTER*10, allocatable :: namen(:) 
+ 
++! MAGINT insertion
++      integer NNAT_EQ(NNN)
++! END MAGINT insertion
++
++
+ !      COMMON /GENER  /  BR2(3,3)                                        
+ !      COMMON /CHAR/     LATTIC,NAME(NATO)                               
+ !                                                                       
+@@ -305,6 +310,9 @@
+       if(nc.gt.nnn) stop ' nnn too small'                                     
+       DISTS(NC)=DIST                                                    
+       NNAT(NC)=JAT                                                      
++! MAGINT insertion
++      NNAT_EQ(NC)=MM
++! END MAGINT insertion
+       DO 105 L=1,3                                                      
+   105 PNN(L,NC)=PP(L)                                                   
+ !     write(66,2)JAT,NAME(JAT),PP(1),PP(2),PP(3),DIST                    
+@@ -361,12 +369,15 @@
+ !
+       SUMRAD=RMT(JATOM)+RMT(N3)                                        
+       if(dists(n1).lt.dfac*dists(1)) then
+-       if(SHOWALL.or.(M.EQ.1))write(66,3) N3,NAME(N3),(PNN(L,N2),L=1,3),DISTS(N1), &
+-                   DISTS(N1)*0.529177  
++! MAGINT insertion
++       if(SHOWALL.or.(M.EQ.1))write(66,3)N3,NAME(N3),(PNN(L,N2),L=1,3),&
++                   DISTS(N1),DISTS(N1)*0.529177,NNAT_EQ(N2)
++!                   DISTS(N1),DISTS(N1)*0.529177,NNAT_EQ(N2)
++! END MAGINT insertion
+        IF(ovlap(n3).and.SUMRAD.GE.DISTS(N1)) THEN
+         ovlap(n3)=.false.                        
+-        write(66,4) JATOM,RMT(JATOM),N3,RMT(N3), SUMRAD, DISTS(N1)         
+-        WRITE(*,4) JATOM,RMT(JATOM),N3,RMT(N3), SUMRAD, DISTS(N1)         
++        write(66,4) JATOM,RMT(JATOM),N3,RMT(N3),SUMRAD,DISTS(N1)
++        WRITE(*,4) JATOM,RMT(JATOM),N3,RMT(N3), SUMRAD, DISTS(N1)
+        end if         
+       end if         
+ !
+@@ -561,9 +572,13 @@
+       print*," NN created a new ",trim(fname1),"_nn file"   
+                                                      
+       STOP 'NN created a new CASE.STRUCT_NN FILE'                          
+-!                                                                       
+-    3 FORMAT(' ATOM:',I3,2X,A10,'AT',3F8.4,                             &
+-       ' IS',F9.5,' A.U.',f10.5,' ANG')                               
++!
++! MAGINT insertion
++    3 FORMAT(' ATOM:',I3,2X,A10,'AT',3F8.4, &
++       ' IS',F9.5,' A.U.',f10.5,' ANG',i6)  
++!    3 FORMAT(' ATOM:',I3,2X,A10,'AT',3F8.4,                             &
++!       ' IS',F9.5,' A.U.',f10.5,' ANG')                               
++! END MAGINT insertion
+  1011 FORMAT(4X,I4,4X,F10.8,3X,F10.8,3X,F10.8,5x,a10,f5.1)         
+  1012 FORMAT(4X,I4,4X,F10.8,3X,F10.8,3X,F10.8,/,15X,I2,17X,I2)     
+  1020 FORMAT(///,3X,'ERROR IN EBND  : MULT(JATOM)=0 ...',                &
