@@ -74,23 +74,31 @@ def run_shell():
             mpi.report("\nA = %10.6f    B = %10.6f    C = %10.6f" % (latt[0], latt[1], latt[2]))
         f.close()
 
-        Interactions = (('Ion0', 'Ion1'),)
 
-        for int in Interactions:
-            for type in int:
-                # self.interact_types.add(type)
-                interact_types[type] = None
-                if type not in interact_sites:
-                    interact_sites[type] = []
-                    interact_basis[type] = 0
-                    count = 0
-                    for icrsh in range(1):
-                        interact_sites[type].append((icrsh, count))
-                        interact_basis[type] += 1
-                        count += 1
+    elif general_par['dft_exec'] == 'Vasp':
 
-        for int in Interactions:
-            mpi.report('-' * 40)
-            mpi.report('Starting Shell evaluation ... ')
-            mpi.report('-' * 40)
-            shells(general_par, fname, int, interact_sites, interact_basis, max_n_shells=3, run_only=True)
+        filename = 'POSCAR'
+        struct = Poscar()
+        path = general_par['folder'] + '/'
+        struct.from_file(vasp_dir=path, poscar_filename=filename)
+
+    Interactions = (('Ion0', 'Ion1'),)
+
+    for int in Interactions:
+        for type in int:
+            # self.interact_types.add(type)
+            interact_types[type] = None
+            if type not in interact_sites:
+                interact_sites[type] = []
+                interact_basis[type] = 0
+                count = 0
+                for icrsh in range(1):
+                    interact_sites[type].append((icrsh, count))
+                    interact_basis[type] += 1
+                    count += 1
+
+    for int in Interactions:
+        mpi.report('-' * 40)
+        mpi.report('Starting Shell evaluation ... ')
+        mpi.report('-' * 40)
+        shells(general_par, fname, int, interact_sites, interact_basis, max_n_shells=3, run_only=True)
