@@ -93,8 +93,3 @@ def read_input_file(filename):
     return general_par, solver_par, basis_par, magint_par
 
 
-def print_logo():
-    mpi.report(' __  __   __   __  __  _  _  ____')
-    mpi.report('(  \/  ) (  ) / _)(  )( \( )(_  _)')
-    mpi.report(' )    (  /__\( (/\ )(  )  (   )(  ')
-    mpi.report('(_/\/\_)(_)(_)\__/(__)(_)\_) (__) \n')

@@ -68,9 +68,11 @@ def run_magint():
     solver_par = mpi.bcast(solver_par)
     basis_par = mpi.bcast(basis_par)
     magint_par = mpi.bcast(magint_par)
+    if general_par['dft_exec'] == 'Vasp':
+        print_warning_vasp()
 
     mpi.report('-' * 40)
-    mpi.report('Starting MagInteract calculation ... ')
+    mpi.report('Starting MagInt calculation ... ')
     mpi.report('-' * 40)
 
     # Init the SumK class
