@@ -1,4 +1,4 @@
-![logo_MagInt](https://github.com/dariofiosca/MagInt/blob/main/logo.png)
+![logo_MagInt](https://github.com/MagInteract/MagInt/blob/main/logo.png)
 
 
 # __MagInt__
