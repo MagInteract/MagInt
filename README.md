@@ -5,7 +5,7 @@
 
 ---
 
-Copyright (C) 2012-2024: Leonid V. Pourovskii, 2023-2024: Dario Fiore Mosca
+Copyright (C) 2012-2025: Leonid V. Pourovskii, 2023-2025: Dario Fiore Mosca
 
 This program implements the force-theorem Hubbard-I (FT-HI) approach to calculation of intersite exchange interactions in correlated insulators. The formalism is given in L. V. Pourovskii Phys. Rev. B 94, 115117 (2016). It is a post-processing program that works on top of a fully converged DFT+HI calculation, and for this purpose it is interfaced with the [TRIQS](https://triqs.github.io/triqs/latest/) software library, and the DFT code interface [TRIQS/DFTTools](https://triqs.github.io/dft_tools/latest/). 
 
