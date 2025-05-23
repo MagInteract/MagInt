@@ -68,11 +68,9 @@ def run_magint():
     solver_par = mpi.bcast(solver_par)
     basis_par = mpi.bcast(basis_par)
     magint_par = mpi.bcast(magint_par)
-    if general_par['dft_exec'] == 'Vasp':
-        print_warning_vasp()
 
     mpi.report('-' * 40)
-    mpi.report('Starting MagInt calculation ... ')
+    mpi.report('Starting MagInteract calculation ... ')
     mpi.report('-' * 40)
 
     # Init the SumK class
@@ -161,18 +159,31 @@ def run_magint():
     # Calculate effective Atomic levels
     eal = SK.eff_atomic_levels()
 
+    ifSO=solver_par['use_spin_orbit']
+
     # Set DC
     mpi.report('-' * 40)
     mpi.report('DC after reading SK: ')
     for i_sh in range(SK.n_inequiv_shells):
-        SK.dc_imp[i_sh]['ud'][0, 0] = useval[i_sh]
+        if ifSO: 
+            SK.dc_imp[i_sh]['ud'][0, 0] = useval[i_sh]
+        else:
+            SK.dc_imp[i_sh]['up'][0, 0] = useval[i_sh]
+            SK.dc_imp[i_sh]['down'][0, 0] = useval[i_sh]
         if mpi.is_master_node() and general_par['verbosity'] > 1:
-            print('DC after reading SK for shell :', i_sh, '\n', SK.dc_imp[i_sh]['ud'])
+            if ifSO:
+                print('DC after reading SK for shell :', i_sh, '\n', SK.dc_imp[i_sh]['ud'])
+            else:
+                print('DC after reading SK for shell :', i_sh, '\n', SK.dc_imp[i_sh]['up'])
 
     # Init the Solver:
     S = []
     dm = {}
-    dm['ud'] = np.zeros((nlms[0], nlms[0]), complex)
+    if ifSO:
+        dm['ud'] = np.zeros((nlms[0], nlms[0]), complex)
+    else:
+        dm['up'] = np.zeros((nlm[0], nlm[0]), complex)
+        dm['down'] = np.zeros((nlm[0], nlm[0]), complex)
     for i_sh in range(SK.n_inequiv_shells):
         # Initialize Solver
         S.append(Solver(beta=solver_par['beta'], l=solver_par['ls'][i_sh], n_iomega=solver_par['n_iomega'],
@@ -181,7 +192,10 @@ def run_magint():
                    use_dc_formula=solver_par['dc_type'], use_dc_value=useval[i_sh])
 
         if not previous_present:
-            S[i_sh].Sigma_iw << SK.dc_imp[0]['ud'][0, 0]
+            if ifSO:
+                S[i_sh].Sigma_iw << SK.dc_imp[0]['ud'][0, 0]
+            else:
+                S[i_sh].Sigma_iw << SK.dc_imp[0]['up'][0, 0]
 
         if (previous_present):
             try:
@@ -207,11 +221,11 @@ def run_magint():
             eal[i_sh][s].real[abs(eal[i_sh][s].real) < solver_par['tol_eal']] = 0
             eal[i_sh][s].imag[abs(eal[i_sh][s].imag) < solver_par['tol_eal']] = 0
 
-        if mpi.is_master_node():
-            print_arr(eal[i_sh]['ud'], log='Effective Atomic Levels : ', decd=6,
-                      fname='eal_in_mag_int_' + str(i_sh) + '.dat',
-                      prn_zero_imag=False)
-            print_arr(eal[i_sh]['ud'].real, log='Effective Atomic Levels : ', decd=6, prn_zero_imag=False)
+        #if mpi.is_master_node():
+        #    print_arr(eal[i_sh]['ud'], log='Effective Atomic Levels : ', decd=6,
+        #              fname='eal_in_mag_int_' + str(i_sh) + '.dat',
+        #              prn_zero_imag=False)
+        #    print_arr(eal[i_sh]['ud'].real, log='Effective Atomic Levels : ', decd=6, prn_zero_imag=False)
 
         # Exclude non-interacting ions from the Solver
         if isinstance(magint_par['included_atoms'], list) and i_sh not in magint_par['included_atoms']: continue
@@ -299,6 +313,7 @@ def run_magint():
         else:
             assert 0, "The basis parameter 'ps_j' should be either a float or a list"
 
-        VM.Mult_interact(V_4ind, MagInt, fname='V_Mult_%s-%s.dat' % (magint_par['atom1'], magint_par['atom2']))
+        VM.Mult_interact(V_4ind, MagInt, fname='V_Mult_%s-%s.dat' % (magint_par['atom1'], magint_par['atom2']),
+                         tol_prnt=magint_par['tol_prnt'])
         MI_h5name = 'Vmult'
         VM.store_results_in_h5(MagInt, MI_h5name)

@@ -542,16 +542,3 @@ def print_logo():
     mpi.report('(  \/  ) (  ) / _)(  )( \( )(_  _)')
     mpi.report(' )    (  /__\( (/\ )(  )  (   )(  ')
     mpi.report('(_/\/\_)(_)(_)\__/(__)(_)\_) (__) \n')
-
-def print_warning_vasp():
-    mpi.report('\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    mpi.report('!!     ▗▖ ▗▖ ▗▄▖ ▗▄▄▖ ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖ ▗▄▄▖     !!')
-    mpi.report('!!     ▐▌ ▐▌▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌  █  ▐▛▚▖▐▌▐▌        !!')
-    mpi.report('!!     ▐▌ ▐▌▐▛▀▜▌▐▛▀▚▖▐▌ ▝▜▌  █  ▐▌ ▝▜▌▐▌▝▜▌     !!')
-    mpi.report('!!     ▐▙█▟▌▐▌ ▐▌▐▌ ▐▌▐▌  ▐▌▗▄█▄▖▐▌  ▐▌▝▚▄▞      !!')
-    mpi.report('!!                                               !!')
-    mpi.report('!!  The VASP interface is experimental and has   !!')
-    mpi.report('!!  not been extensively tested.                 !!')
-    mpi.report('!!  Please contact the authors to get assistance !!')
-    mpi.report('!!                                               !!')
-    mpi.report('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')

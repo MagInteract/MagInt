@@ -172,6 +172,7 @@ class Multipolar:
         elif action == 'dirprod':
             # Generate from the direct product
             self.product = True
+            self.basis = Mult_Comp[0].basis
             Kmax0 = Mult_Comp[0].Kmax
             Kmax1 = Mult_Comp[1].Kmax
             J0 = Mult_Comp[0].J
@@ -344,7 +345,7 @@ class Multipolar:
             stop
 
         self.J1 = J1
-        if self.J1 is None:
+        if self.J1 is None or action=='dirprod' :
             self.TKQ1 = self.TKQ
             self.Kmax1 = self.Kmax
             self.J1 = self.J
@@ -382,7 +383,7 @@ class Multipolar:
                     for Q2 in range(-Qmax, Qmax + 1):
                         print('%s_%s, Norm = %s' % (K2, Q2, self.TKQ1_norm['%s_%s' % (K2, Q2)]))
 
-    def Mult_interact(self, V4_ind, MagInt, fname='V_Mult.dat', tol_prnt=1e-6):
+    def Mult_interact(self, V4_ind, MagInt, fname='V_Mult.dat', tol_prnt=5e-7):
         """
         Transform V4 from atomic states to a multipolar basis and save the results to a file.
 
@@ -400,7 +401,7 @@ class Multipolar:
              The name of the file where the transformed multipolar interactions will be saved. Default is 'V_Mult.dat'.
         tol_prnt : float
              A tolerance threshold for printing transformed interactions. Interactions with absolute values below this
-             threshold will not be printed. Default is 2e-6.
+             threshold will not be printed. Default is 1e-6.
 
         Returns:
         --------
@@ -477,12 +478,12 @@ class Multipolar:
                                                 st1 = "%s" % (self.prn_bas['%s_%s' % (K, Q)])
                                                 for Q1 in range(-Qmax1, Qmax1 + 1):
                                                     if prn_imag:
-                                                        st1 += '{0: ^11.3f}'.format(
+                                                        st1 += '{0: ^11.4f}'.format(
                                                             1000.0 * self.Vmult[m_key][Qmax + Q, Qmax1 + Q1].real)
-                                                        st1 += '{0: ^+8.3f}I'.format(
+                                                        st1 += '{0: ^+8.4f}I'.format(
                                                             1000.0 * self.Vmult[m_key][Qmax + Q, Qmax1 + Q1].imag)
                                                     else:
-                                                        st1 += '{0: ^10.3f}'.format(
+                                                        st1 += '{0: ^10.4f}'.format(
                                                             1000.0 * self.Vmult[m_key][Qmax + Q, Qmax1 + Q1].real)
                                                 f.write("%s\n" % (st1))
             f.close()

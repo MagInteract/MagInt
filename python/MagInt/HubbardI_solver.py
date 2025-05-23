@@ -307,12 +307,12 @@ class Solver:
         omega = np.zeros([N_om], np.complex_)
 
         nlm = self.Nlm
-        if (self.UseSpinOrbit):
-            nlmtot = nlm * 2
-            nlms = nlmtot
-        else:
-            nlmtot = nlm
-            nlms = nlmtot
+        #if (self.UseSpinOrbit):
+        nlmtot = nlm * 2
+        nlms = nlmtot
+        #else:
+        #    nlmtot = nlm
+        #    nlms = nlmtot
 
         if isinstance(u4ind, np.ndarray):
             # set 4-ind and 2-ind U from input

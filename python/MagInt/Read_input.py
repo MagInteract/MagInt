@@ -21,7 +21,8 @@ solver_keys = ['beta', 'u_int', 'j_hund', 'eal_read', 'use_spin_orbit',
                'n_lev', 'n_moments', 'ommin', 'ommax', 'n_omega', 'dc_type',
                'kanamori', 'chemical_potential_init', 'ls', 'n_iomega', 'n_el', 'broadening', 'tol_eal']
 basis_keys = ['split', 'ps_j', 'action']
-magint_keys = ['atom1', 'atom2', 'n_shells', 'correlated_atoms', 'mult_conv', 'calc_all_sites','included_atoms']
+magint_keys = ['atom1', 'atom2', 'n_shells', 'correlated_atoms', 'mult_conv', 'calc_all_sites','included_atoms',
+                'tol_prnt']
 
 # Define default configuration
 default_config = configparser.ConfigParser()
@@ -33,7 +34,7 @@ default_config['SOLVER'] = {'beta': 40.0, 'u_int': 0.0, 'j_hund': 0.0, 'eal_read
                             'n_iomega': 1025, 'n_el': 1, 'tol_eal': 1e-5}
 default_config['BASIS'] = {'split': 0.000001, 'ps_j': 0, 'action': "'merge'"}
 default_config['MAGINT'] = {'atom1': 'Atom1', 'atom2': 'Atom2', 'n_shells': 3, 'mult_conv': "'sph_tensor'",
-                            'calc_all_sites': False, 'included_atoms': 0}
+                            'calc_all_sites': False, 'included_atoms': 0, 'tol_prnt' : 1e-6}
 
 
 def read_input_file(filename):
@@ -47,7 +48,7 @@ def read_input_file(filename):
                   'broadening': float, 'tol_eal': float}
     basis_par = {'split': float, 'ps_j': list, 'action': str}
     magint_par = {'atom1': str, 'atom2': str, 'n_shells': int, 'correlated_atoms': list, 'mult_conv': str,
-                  'calc_all_sites': bool, 'included_atoms': list}
+                  'calc_all_sites': bool, 'included_atoms': list, 'tol_prnt' : float}
 
     for section in default_config.keys():
         if config.has_section(section):
@@ -93,3 +94,8 @@ def read_input_file(filename):
     return general_par, solver_par, basis_par, magint_par
 
 
+def print_logo():
+    mpi.report(' __  __   __   __  __  _  _  ____')
+    mpi.report('(  \/  ) (  ) / _)(  )( \( )(_  _)')
+    mpi.report(' )    (  /__\( (/\ )(  )  (   )(  ')
+    mpi.report('(_/\/\_)(_)(_)\__/(__)(_)\_) (__) \n')

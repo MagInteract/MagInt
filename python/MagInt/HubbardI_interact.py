@@ -398,11 +398,19 @@ class HubbardI_interact(Solver):
             ealmat['ud'] = np.zeros((Nlm * 2, Nlm * 2), np.complex)
             ealmat['ud'][0:Nlm, 0:Nlm] = eal['up']
             ealmat['ud'][Nlm:2 * Nlm, Nlm:2 * Nlm] = eal['down']
+        nlms=ealmat['ud'].shape[0]
+        nlm=int(nlms/2)
+        if rmat.shape[0]==nlm:
+            # only orbital-space rotation is given (no SO)
+            rmat_tmp=rmat.copy()
+            rmat=np.zeros((nlms,nlms),complex)
+            rmat[0:nlm,0:nlm]=rmat_tmp
+            rmat[nlm:nlms,nlm:nlms]=rmat_tmp
         if isinstance(rmat,np.ndarray):
             if rmat_time_inv==1:
-                ealmat['ud']=np.dot(rmat.conjugate(),np.dot(eal['ud'].transpose(),rmat.transpose()))
+                ealmat['ud']=np.dot(rmat.conjugate(),np.dot(ealmat['ud'].transpose(),rmat.transpose()))
             else:
-                ealmat['ud']=np.dot(rmat,np.dot(eal['ud'],rmat.transpose().conjugate()))
+                ealmat['ud']=np.dot(rmat,np.dot(ealmat['ud'],rmat.transpose().conjugate()))
         self.set_atomic_levels(eal=ealmat)
 
 

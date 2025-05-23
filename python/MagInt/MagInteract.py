@@ -105,7 +105,7 @@ class MagInteract:
             self.trans_GF = False
         # end DEBUG
 
-    def rot_stbas(self, StBas, n_el, nlm, rot_mat, rot_time_rev):
+    def rot_stbas(self, StBas, n_el, nlm, rot_mat_in, rot_time_rev):
         """
         Rotate standard basis 
  
@@ -117,9 +117,9 @@ class MagInteract:
             shell occupancy
         nlm  : integer
             shell orbital degeneracy
-        rot_mat : np.ndarray
-            one-electron rotation matrix in  spin-orbital basis 
-            of dimension ( nlm*2 x nlm*2 )
+        rot_mat_in : np.ndarray
+            one-electron rotation matrix 
+            of dimension ( nlm*2 x nlm*2 ) if SO included or ( nlm x nlm ) otherwise
         rot_time_rev : integer
             =1 if time reversal is to be applied together with rotation
        
@@ -129,6 +129,13 @@ class MagInteract:
             transformed Standard Basis
         """
         nlms = 2 * nlm
+        if rot_mat_in.shape[0] == nlm:
+            # rotmat without SO, extending it to both spin blocks
+            rot_mat=np.zeros((nlms,nlms),complex)
+            rot_mat[0:nlm,0:nlm]=rot_mat_in
+            rot_mat[nlm:nlms,nlm:nlms]=rot_mat_in
+        else:
+            rot_mat=rot_mat_in
         vlen = int(factorial(nlms) / factorial(n_el) / factorial(nlms - n_el))
         fs_rmat = np.zeros((vlen, vlen), dtype=np.cdouble, order='F')
         if rot_time_rev == 1:
@@ -198,7 +205,9 @@ class MagInteract:
             f = open(self.fname + ".outputnn")
             head = [f.readline() for i in range(4)]
             width = 10
-            rela_line = head[3].strip()
+            #rela_line = head[3].strip()
+            rela_line = head[3]
+            mpi.report("%s\n"%rela_line)
             self.latt = np.array([float(rela_line[j:j+width].strip()) for j in range(0, 3*width, width)])
             if general_par['verbosity'] > 0:
                 mpi.report("\nA = %10.6f    B = %10.6f    C = %10.6f" % (self.latt[0], self.latt[1], self.latt[2]))
@@ -420,7 +429,7 @@ class MagInteract:
                 # fsite1 = self.interact_sites[type1][0]
 
                 if ('up' in G_t.indices) and ('down' in G_t.indices):
-                    Nlm = len([a for a in G_t['up'].indices])
+                    Nlm = G_t['up'].data.shape[1]
                     SOblocks = False
                 elif 'ud' in G_t.indices:
                     SOblocks = True

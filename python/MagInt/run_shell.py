@@ -68,37 +68,30 @@ def run_shell():
         f = open(fname + ".outputnn")
         head = [f.readline() for i in range(4)]
         width = 10
-        rela_line = head[3].strip()
+        #rela_line = head[3].strip()
+        rela_line=head[3]
         latt = np.array([float(rela_line[j:j + width].strip()) for j in range(0, 3 * width, width)])
         if general_par['verbosity'] > 0:
             mpi.report("\nA = %10.6f    B = %10.6f    C = %10.6f" % (latt[0], latt[1], latt[2]))
         f.close()
 
+        Interactions = (('Ion0', 'Ion1'),)
 
-    elif general_par['dft_exec'] == 'Vasp':
+        for int in Interactions:
+            for type in int:
+                # self.interact_types.add(type)
+                interact_types[type] = None
+                if type not in interact_sites:
+                    interact_sites[type] = []
+                    interact_basis[type] = 0
+                    count = 0
+                    for icrsh in range(1):
+                        interact_sites[type].append((icrsh, count))
+                        interact_basis[type] += 1
+                        count += 1
 
-        filename = 'POSCAR'
-        struct = Poscar()
-        path = general_par['folder'] + '/'
-        struct.from_file(vasp_dir=path, poscar_filename=filename)
-
-    Interactions = (('Ion0', 'Ion1'),)
-
-    for int in Interactions:
-        for type in int:
-            # self.interact_types.add(type)
-            interact_types[type] = None
-            if type not in interact_sites:
-                interact_sites[type] = []
-                interact_basis[type] = 0
-                count = 0
-                for icrsh in range(1):
-                    interact_sites[type].append((icrsh, count))
-                    interact_basis[type] += 1
-                    count += 1
-
-    for int in Interactions:
-        mpi.report('-' * 40)
-        mpi.report('Starting Shell evaluation ... ')
-        mpi.report('-' * 40)
-        shells(general_par, fname, int, interact_sites, interact_basis, max_n_shells=3, run_only=True)
+        for int in Interactions:
+            mpi.report('-' * 40)
+            mpi.report('Starting Shell evaluation ... ')
+            mpi.report('-' * 40)
+            shells(general_par, fname, int, interact_sites, interact_basis, max_n_shells=3, run_only=True)

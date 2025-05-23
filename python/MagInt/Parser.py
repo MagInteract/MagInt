@@ -115,7 +115,8 @@ class Wien2kStruct:
                 elif "RELA" in line:
                     found_rela = True
                     width = 10
-                    rela_line = lines[i + 1].strip()
+                    #rela_line = lines[i + 1].strip()
+                    rela_line = lines[i + 1]
                     self.lattice_vecs = np.array(
                         [float(rela_line[j:j + width].strip()) for j in range(0, 3 * width, width)])
                     # commented line does not work for 3-digit angles

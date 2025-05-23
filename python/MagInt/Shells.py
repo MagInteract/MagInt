@@ -164,12 +164,12 @@ class shells:
                 mpi.report("\nATOM: %s" % (atom))
             mpi.report("\nNum_shells = %s" % (self.nshells))
             for key0 in self.R_vec:
-                # print("\nIon Labels = ", key0)
+                print("\nIon Labels = ", key0)
                 mpi.report("\nR_shells = %s" % (self.R_shell[key0]))
                 for i in range(self.nshells):
                     if i >= len(self.coor_num[key0]):
-                        raise IndexError("\n\nThe range of Shells extends beyond the calculated nearest neighbors! "
-                                         "Try to reduce n_shells")
+                        mpi.report("\n\nThe range of Shells extends beyond the calculated nearest neighbors %s !\n")
+                        break
                     mpi.report("\nShell = %s" % (i))
                     mpi.report("\nCoord_num = %s" % (self.coor_num[key0][i]))
                     if print_vecs == 'Basis' and general_par['verbosity'] > 1:
@@ -466,13 +466,19 @@ class shells:
                                 il1.split()[il.split().index('ATOM:') + 1]) - 1 == num1):
                                 for ist in range(len(il1.split())):
                                     if il1.split()[ist] == 'AT': break
-                                coor1 = array([float(il1.split()[i]) for i in range(ist + 1, ist + 4)])
+                                #coor1 = array([float(il1.split()[i]) for i in range(ist + 1, ist + 4)])
+                                x=float(il1[23:31])
+                                y=float(il1[31:39])
+                                z=float(il1[39:47])
+                                coor1 = array([x,y,z])
+                                #coor1 = array([float(il1.split()[i]) for i in range(ist + 1, ist + 4)])
+                                #n_eq_site1 = int(il1.split()[ist + 9]) - 1
+                                n_eq_site1 = int(il1[80:85])
                                 coor1 = coor1 - coor
 
                                 diff_vec = self.R_origin.get(ind1) - self.R_origin.get(ind0)
 
                                 dd_new = sqrt(dot(self.struct.frac_to_carth(coor1), self.struct.frac_to_carth(coor1)))
-                                n_eq_site1 = int(il1.split()[ist + 9]) - 1
 
                                 if (abs(dd - dd_new) > tol):
                                     if (nshells == max_n_shells - 1):
