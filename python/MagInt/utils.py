@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------------#
 # MagInt library
-# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2024
-#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2024
+# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2025
+#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2025
 # Email: leonid@cpht.polytechnique.fr
 # ------------------------------------------------------------------------------------#
 #
@@ -542,3 +542,16 @@ def print_logo():
     mpi.report('(  \/  ) (  ) / _)(  )( \( )(_  _)')
     mpi.report(' )    (  /__\( (/\ )(  )  (   )(  ')
     mpi.report('(_/\/\_)(_)(_)\__/(__)(_)\_) (__) \n')
+
+def print_warning_vasp():
+    mpi.report('\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    mpi.report('!!     ▗▖ ▗▖ ▗▄▖ ▗▄▄▖ ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖ ▗▄▄▖      !!')
+    mpi.report('!!     ▐▌ ▐▌▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌  █  ▐▛▚▖▐▌▐▌         !!')
+    mpi.report('!!     ▐▌ ▐▌▐▛▀▜▌▐▛▀▚▖▐▌ ▝▜▌  █  ▐▌ ▝▜▌▐▌▝▜▌      !!')
+    mpi.report('!!     ▐▙█▟▌▐▌ ▐▌▐▌ ▐▌▐▌  ▐▌▗▄█▄▖▐▌  ▐▌▝▚▄▞       !!')
+    mpi.report('!!                                                !!')
+    mpi.report('!!  The VASP interface is experimental and has    !!')
+    mpi.report('!!  undergone limited testing.                    !!')
+    mpi.report('!!  If you plan to use it, please contact the     !!')
+    mpi.report('!!  authors for further information or assistance !!')
+    mpi.report('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')

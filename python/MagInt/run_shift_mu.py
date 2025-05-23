@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------------#
 # MagInt library
-# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2024
-#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2024
+# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2025
+#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2025
 # Email: leonid@cpht.polytechnique.fr
 # ------------------------------------------------------------------------------------#
 #
