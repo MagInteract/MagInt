@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------------#
 # MagInt library
-# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2025
-#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2025
+# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2024
+#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2024
 # Email: leonid@cpht.polytechnique.fr
 # ------------------------------------------------------------------------------------#
 #
@@ -13,6 +13,7 @@
 # ------------------------------------------------------------------------------------#
 from triqs_dft_tools.sumk_dft_tools import *
 from triqs_dft_tools.converters.wien2k import *
+from triqs.gf import *
 from MagInt.HubbardI_solver import Solver as Solver
 from MagInt.Read_input import read_input_file
 import triqs.utility.mpi as mpi
@@ -160,6 +161,7 @@ def run_dos():
 
     # Density:
     for i_sh in range(SK.n_inequiv_shells):
+
         S[i_sh].G_iw <<= SK.extract_G_loc()[i_sh]
 
         # Calculate effective atomic levels:
@@ -169,18 +171,31 @@ def run_dos():
             eal[i_sh][s].imag[abs(eal[i_sh][s].imag) < solver_par['tol_eal']] = 0
 
         # eal[i_sh] = read_eal(general_par['folder'] + '/eal_last_site_' + str(i_sh) + '.dat', nlms[i_sh])
+
+        #
+
         S[i_sh].set_atomic_levels(eal=eal[i_sh])
 
         mpi.report('Calculating the DOS for shell ' + str(i_sh))
         # solve it:
-        if solver_par['kanamori'] is False:
-            S[i_sh].GF_realomega(ommin=solver_par['ommin'], ommax=solver_par['ommax'], N_om=2 * solver_par['n_omega'],
-                                 U_int=solver_par['u_int'][i_sh], J_hund=solver_par['j_hund'][i_sh])
+        if isinstance(magint_par['included_atoms'], list) and i_sh not in magint_par['included_atoms']: 
+            # put real-axis zero sigma for uncorrelated shells
+            ommin=solver_par['ommin']; ommax=solver_par['ommax']; N_om=2 * solver_par['n_omega'] 
+            glist = lambda : [ GfReFreq(indices = al, window = (ommin, ommax), n_points = N_om) for a,al in S[i_sh].gf_struct]
+            a_list = [a for a,al in S[i_sh].gf_struct]
+            S[i_sh].Sigma_w = BlockGf(name_list = a_list, block_list = glist(),make_copies=False)
         else:
-            S[i_sh].GF_realomega(ommin=solver_par['ommin'], ommax=solver_par['ommax'], N_om=2 * solver_par['n_omega'],
-                                 u4ind=U_full[i_sh])
+            # run solver only for correlated shells
+            #if mpi.is_master_node():
+            #    print_arr(eal[i_sh]['ud'],fname='eal_dos_sh%s.dat'%(i_sh),decd=6,prn_zero_imag=True)
+            if solver_par['kanamori'] is False:
+                S[i_sh].GF_realomega(ommin=solver_par['ommin'], ommax=solver_par['ommax'], N_om=2 * solver_par['n_omega'], verbosity =2 ,
+                                     U_int=solver_par['u_int'][i_sh], J_hund=solver_par['j_hund'][i_sh])
+            else:
+                S[i_sh].GF_realomega(ommin=solver_par['ommin'], ommax=solver_par['ommax'], N_om=2 * solver_par['n_omega'], verbosity =2,
+                                     u4ind=U_full[i_sh])
 
-        S[i_sh].Sigma_w << mpi.bcast(S[i_sh].Sigma_w)
+            S[i_sh].Sigma_w << mpi.bcast(S[i_sh].Sigma_w)
 
     SK.put_Sigma(Sigma_imp=[S[i_sh].Sigma_w for i_sh in range(SK.n_inequiv_shells)])
 

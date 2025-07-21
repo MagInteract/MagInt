@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------------#
 # MagInt library
-# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2025
-#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2025
+# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2024
+#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2024
 # Email: leonid@cpht.polytechnique.fr
 # ------------------------------------------------------------------------------------#
 #
@@ -296,24 +296,42 @@ def run_magint():
         except ValueError:
             print(f"Correlated atoms not found. Check the maginteract.ini file")
 
-        if type(basis_par['ps_j'][at1]) is float and basis_par['ps_j'][at1] == basis_par['ps_j'][at2]:
-            VM = Multipolar(J=basis_par['ps_j'][at1], basis='real', print_mat=True,
+        diff_bas=False
+        if type(basis_par['ps_j'][at1]) is float :
+            VM_at1 = Multipolar(J=basis_par['ps_j'][at1], basis='real', print_mat=True,
                             conv_mon_dipol=magint_par['mult_conv'])
-        elif type(basis_par['ps_j'][at1]) is float and basis_par['ps_j'][at1] != basis_par['ps_j'][at2]:
-            VM = Multipolar(J=basis_par['ps_j'][at1], basis='real', print_mat=True,
-                            conv_mon_dipol=magint_par['mult_conv'], J1=basis_par['ps_j'][at2])
         elif len(basis_par['ps_j'][at1]) == 2:
             # combined operator basis
-            VM1 = Multipolar(J=basis_par['ps_j'][0][0], basis='real', print_mat=False,
+            VM1 = Multipolar(J=basis_par['ps_j'][at1][0], basis='real', print_mat=False,
                              conv_mon_dipol=magint_par['mult_conv'])
-            VM2 = Multipolar(J=basis_par['ps_j'][0][1], basis='real', print_mat=False,
+            VM2 = Multipolar(J=basis_par['ps_j'][at1][1], basis='real', print_mat=False,
                              conv_mon_dipol=magint_par['mult_conv'])
             #
-            VM = Multipolar(Mult_Comp=[VM1, VM2], action=basis_par['action'], print_mat=True)
+            VM_at1 = Multipolar(Mult_Comp=[VM1, VM2], action=basis_par['action'], print_mat=True)
         else:
-            assert 0, "The basis parameter 'ps_j' should be either a float or a list"
+            assert 0, "The basis parameter 'ps_j' for %s should be either a float or a list"%(magint_par['atom1'])
+        if basis_par['ps_j'][at2] != basis_par['ps_j'][at1]:
+            diff_bas=True
+            if type(basis_par['ps_j'][at2]) is float :
+                VM_at2 = Multipolar(J=basis_par['ps_j'][at2], basis='real', print_mat=True,
+                                conv_mon_dipol=magint_par['mult_conv'])
+            elif len(basis_par['ps_j'][at2]) == 2:
+                # combined operator basis
+                VM1 = Multipolar(J=basis_par['ps_j'][at2][0], basis='real', print_mat=False,
+                                 conv_mon_dipol=magint_par['mult_conv'])
+                VM2 = Multipolar(J=basis_par['ps_j'][at2][1], basis='real', print_mat=False,
+                                 conv_mon_dipol=magint_par['mult_conv'])
+                #
+                VM_at2 = Multipolar(Mult_Comp=[VM1, VM2], action=basis_par['action'], print_mat=True)
+            else:
+                assert 0, "The basis parameter 'ps_j' for %s should be either a float or a list"%(magint_par['atom2'])
 
-        VM.Mult_interact(V_4ind, MagInt, fname='V_Mult_%s-%s.dat' % (magint_par['atom1'], magint_par['atom2']),
-                         tol_prnt=magint_par['tol_prnt'])
         MI_h5name = 'Vmult'
-        VM.store_results_in_h5(MagInt, MI_h5name)
+        if not diff_bas:
+            Vmult=Mult_interact(V_4ind, VM_at1, VM_at1, MagInt, fname='V_Mult_%s-%s.dat' % (magint_par['atom1'], magint_par['atom2']),
+                             tol_prnt=magint_par['tol_prnt'])
+            store_results_in_h5(Vmult, MagInt, MI_h5name, VM_at1)
+        else:
+            Vmult=Mult_interact(V_4ind, VM_at1, VM_at2, MagInt, fname='V_Mult_%s-%s.dat' % (magint_par['atom1'], magint_par['atom2']),
+                             tol_prnt=magint_par['tol_prnt'])
+            store_results_in_h5(Vmult, MagInt, MI_h5name, VM_at1, VM1 = VM_at2)

@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------------#
 # MagInt library
-# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2025
-#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2025
+# Written by  : Leonid V. Pourovskii (CPHT Ecole Polytechnique) 2012-2024
+#             : Dario Fiore Mosca (CPHT Ecole Polytechnique) 2023-2024
 # Email: leonid@cpht.polytechnique.fr
 # ------------------------------------------------------------------------------------#
 #
@@ -27,7 +27,7 @@ class Multipolar:
     """This class manipulates multipole operators  ."""
 
     def __init__(self, J=None, Mult_Comp=None, action='dirprod', Kmax=None, basis='complex',
-                 conv_mon_dipol='sph_tensor', print_mat=False, J1=None):
+                 conv_mon_dipol='sph_tensor', print_mat=False):
         """
         Initialize multipole tensors for magnetic interactions.
 
@@ -136,30 +136,14 @@ class Multipolar:
             if print_mat and mpi.is_master_node():
                 print_tensors(J, self.Kmax, TKQ, conv_mon_dipol)
 
-            if J1 != None:
-                self.J1 = J1
-                self.Kmax1 = int(round(2 * J1))
-                if print_mat: print('conv_mon_dipol = %s' % conv_mon_dipol)
-                TKQ1 = self.__gener_TKQ(J1, conv_mon_dipol=conv_mon_dipol)
-                if print_mat and mpi.is_master_node():
-                    print_tensors(J1, self.Kmax, TKQ, conv_mon_dipol)
-            else:
-                self.J1 = J
-                self.Kmax1 = int(round(2 * J))
-                TKQ1 = self.__gener_TKQ(J, conv_mon_dipol=conv_mon_dipol)
 
             if basis == 'real':
                 convert_to_real(self.Kmax, TKQ)
-                convert_to_real(self.Kmax1, TKQ1)
                 if print_mat and mpi.is_master_node():
                     print_real_tensors(self.J, TKQ, self.Kmax)
-                if J1 != None:
-                    if print_mat and mpi.is_master_node():
-                        print_real_tensors(self.J1, TKQ1, self.Kmax1)
 
             self.prn_bas = {}
-            MKmax = max(self.Kmax, self.Kmax1)
-            for K in range(MKmax + 1):
+            for K in range(self.Kmax + 1):
                 for Q in range(-K, K + 1):
                     if K < 4 and basis == 'real':
                         self.prn_bas['%s_%s' % (K, Q)] = '{0: ^10}'.format(real_harm[K][K + Q])
@@ -167,7 +151,6 @@ class Multipolar:
                         self.prn_bas['%s_%s' % (K, Q)] = '{0: ^10}'.format(Q)
 
             self.TKQ = TKQ
-            self.TKQ1 = TKQ1
 
         elif action == 'dirprod':
             # Generate from the direct product
@@ -335,34 +318,20 @@ class Multipolar:
                         print("\nT(K,Q)=(%s,%s), %s : " % (K0, Q, self.prn_bas['%s_%s' % (self.Kmax, Q)]))
                         print_matrix(TKQ['%s_%s' % (self.Kmax, Q)])
             self.TKQ = TKQ
-            self.TKQ1 = self.TKQ
-            self.Kmax1 = self.Kmax
-            self.J1 = J1
 
         else:
             print('Mult_Comp is given, but parameter action=%s is not recognized' % (action))
             print('action can be either \'dirprod\' or  \'merge\'')
             stop
 
-        self.J1 = J1
-        if self.J1 is None or action=='dirprod' :
-            self.TKQ1 = self.TKQ
-            self.Kmax1 = self.Kmax
-            self.J1 = self.J
 
         self.TKQ_norm = {}
-        self.TKQ1_norm = {}
 
         for key, mat in self.TKQ.items():
             if self.basis == 'real':
                 self.TKQ_norm[key] = np.trace(np.dot(mat, mat))
             else:
                 self.TKQ_norm[key] = np.trace(np.dot(mat, mat.conjugate().transpose()))
-        for key, mat in self.TKQ1.items():
-            if self.basis == 'real':
-                self.TKQ1_norm[key] = np.trace(np.dot(mat, mat))
-            else:
-                self.TKQ1_norm[key] = np.trace(np.dot(mat, mat.conjugate().transpose()))
 
         if print_mat and mpi.is_master_node():
             print('\nNormalization of tensors:')
@@ -373,169 +342,7 @@ class Multipolar:
                     Qmax = K
                 for Q in range(-Qmax, Qmax + 1):
                     print('%s_%s, Norm = %s' % (K, Q, self.TKQ_norm['%s_%s' % (K, Q)]))
-            if J1 != None:
-                print('\nNormalization of tensors J1:')
-                for K2 in range(0, self.Kmax1 + 1):
-                    if self.product:
-                        Qmax = self.Qmax[K2]
-                    else:
-                        Qmax = K2
-                    for Q2 in range(-Qmax, Qmax + 1):
-                        print('%s_%s, Norm = %s' % (K2, Q2, self.TKQ1_norm['%s_%s' % (K2, Q2)]))
 
-    def Mult_interact(self, V4_ind, MagInt, fname='V_Mult.dat', tol_prnt=5e-7):
-        """
-        Transform V4 from atomic states to a multipolar basis and save the results to a file.
-
-        This function transforms the interactions represented in atomic states (V4_ind) into a multipolar basis
-        and stores the results in a file. It calculates the transformed interactions for various multipole components
-        and coordinates, providing a detailed view of the transformed interactions.
-
-        Parameters:
-        -----------
-        V4_ind : dict
-             A dictionary containing atomic state interactions, typically generated from atomic calculations.
-        MagInt : MagIntType
-             An instance of the MagIntType class containing information about multipolar interactions.
-        fname : str
-             The name of the file where the transformed multipolar interactions will be saved. Default is 'V_Mult.dat'.
-        tol_prnt : float
-             A tolerance threshold for printing transformed interactions. Interactions with absolute values below this
-             threshold will not be printed. Default is 1e-6.
-
-        Returns:
-        --------
-        Vmult (dict): A dictionary containing the transformed multipolar interactions.
-        """
-
-        if (mpi.is_master_node()):
-            f = open(fname, 'w')
-            self.Vmult = {}
-            for int in MagInt.Interactions:
-                pair = MagInt.int_pairs[int]
-                for key0 in pair.R_vec:
-                    (type0, mul0), (type1, mul1) = key0
-                    dim0 = MagInt.GSM[type0]
-                    dim1 = MagInt.GSM[type1]
-                    f.write("\n -----INTERACTION: %s_%s - %s_%s\n" % (type0, mul0, type1, mul1))
-                    # for i in range(pair.nshells):
-                    nsh_max = min(len(pair.coor_num[key0]), pair.nshells)
-                    for i in range(nsh_max):
-                        f.write("\nShell=%s\n" % (i))
-                        f.write("\nCoor_num = %s\n" % (pair.coor_num[key0][i]))
-                        # cycle over multipoles
-                        for K in range(self.Kmax + 1):
-                            if self.product:
-                                Qmax = self.Qmax[K]
-                            else:
-                                Qmax = K
-                            N = 2 * Qmax + 1
-                            for K1 in range(self.Kmax1 + 1):
-                                if self.product:
-                                    Qmax1 = self.Qmax[K1]
-                                else:
-                                    Qmax1 = K1
-                                N1 = 2 * Qmax1 + 1
-                                str = '          '
-                                for qq in range(-Qmax1, Qmax1 + 1): str += self.prn_bas['%s_%s' % (K1, qq)]
-                                if self.product:
-                                    f.write(
-                                        "\n(%s)-(%s) interactions\n" % (
-                                            self.mult_names_new[K], self.mult_names_new[K1]))
-                                else:
-                                    f.write("\n%s-%s interactions\n" % (multipole_names[K], multipole_names[K1]))
-                                for i1 in range(pair.coor_num[key0][i]):
-                                    R_key = "%s_%s" % (i, i1)
-                                    key = "%s_%s_%s_%s_%s" % (type0, mul0, type1, mul1, R_key)
-                                    if (key in V4_ind):
-                                        V4 = V4_ind[key]
-                                        m_key = key + "_%s_%s" % (K, K1)
-                                        # f.write("m_key=%s\n"%(m_key))
-                                        self.Vmult[m_key] = np.zeros([N, N1], np.complex)
-                                        for Q in range(-Qmax, Qmax + 1):
-                                            mat = self.TKQ['%s_%s' % (K, Q)] / self.TKQ_norm['%s_%s' % (K, Q)]
-                                            for Q1 in range(-Qmax1, Qmax1 + 1):
-                                                mat1 = self.TKQ1['%s_%s' % (K1, Q1)] / self.TKQ1_norm[
-                                                    '%s_%s' % (K1, Q1)]
-                                                for j in range(dim0):
-                                                    for k in range(dim0):
-                                                        for l in range(dim1):
-                                                            for m in range(dim1):
-                                                                self.Vmult[m_key][Qmax + Q, Qmax1 + Q1] += mat[j, k] * \
-                                                                                                           V4[
-                                                                                                               j, k, l, m] * \
-                                                                                                           mat1[l, m]
-                                        av_val = np.mean(abs(self.Vmult[m_key]))
-                                        if av_val > tol_prnt:
-                                            f.write("\n R = %s\n" % (pair.R_vec[key0][R_key]))
-                                            f.write(" T = %s\n" % (np.array(pair.T_vec[key0][R_key])))
-                                            # f.write(
-                                            #    " D = %s\n" % (np.round(np.linalg.norm(pair.R_vec[key0][R_key])), 5))
-                                            f.write("\n%s\n" % (str))
-                                            prn_imag = False
-                                            if np.mean(abs(self.Vmult[m_key].imag)) > tol_prnt: prn_imag = True
-                                            for Q in range(-Qmax, Qmax + 1):
-                                                st1 = "%s" % (self.prn_bas['%s_%s' % (K, Q)])
-                                                for Q1 in range(-Qmax1, Qmax1 + 1):
-                                                    if prn_imag:
-                                                        st1 += '{0: ^11.4f}'.format(
-                                                            1000.0 * self.Vmult[m_key][Qmax + Q, Qmax1 + Q1].real)
-                                                        st1 += '{0: ^+8.4f}I'.format(
-                                                            1000.0 * self.Vmult[m_key][Qmax + Q, Qmax1 + Q1].imag)
-                                                    else:
-                                                        st1 += '{0: ^10.4f}'.format(
-                                                            1000.0 * self.Vmult[m_key][Qmax + Q, Qmax1 + Q1].real)
-                                                f.write("%s\n" % (st1))
-            f.close()
-
-        return self.Vmult
-
-    def store_results_in_h5(self, MagInt, fname):
-        """
-        Store essential data in an HDF5 file for future reference.
-
-        This function is used to store important data related to multipolar interactions and other related information
-        in an HDF5 file. The stored data can be used for future analysis, reference, or sharing with other users.
-
-        Parameters:
-        -----------
-        MagInt : MagIntType
-             An instance of the MagIntType class containing information about multipolar interactions.
-        fname : str
-             The name of the HDF5 file (excluding the '.h5' extension) where the data will be stored.
-        """
-        if (mpi.is_master_node()):
-            ar = HDFArchive(fname + '.h5', 'a')
-            if not ('Multipol_Int' in ar):
-                ar.create_group('Multipol_Int')
-            # data on types, interacting pairs, ground-state multiplicity
-            ar['Multipol_Int']['interactions'] = MagInt.Interactions
-            ar['Multipol_Int']['GSM'] = MagInt.GSM
-            for int in MagInt.Interactions:
-                int_key = '%s-%s' % (int[0], int[1])
-                pairs = MagInt.int_pairs[int]
-                ar['Multipol_Int']['shells_%s' % (int_key)] = pairs.nshells
-                ar['Multipol_Int']['coor_nums_%s' % (int_key)] = pairs.coor_num
-                ar['Multipol_Int']['R_vecs_%s' % (int_key)] = pairs.R_vec
-                ar['Multipol_Int']['T_vecs_%s' % (int_key)] = pairs.T_vec
-            # essential on tensors
-            ar['Multipol_Int']['Kmax'] = self.Kmax
-            ar['Multipol_Int']['ifproduct'] = self.product
-            if self.product:
-                ar['Multipol_Int']['Qmax'] = self.Qmax
-                ar['Multipol_Int']['multipole_names'] = self.mult_names_new
-            else:
-                ar['Multipol_Int']['multipole_names'] = multipole_names
-            ar['Multipol_Int']['prn_bas'] = self.prn_bas
-            ar['Multipol_Int']['TKQ'] = self.TKQ
-            # generalised
-            if self.J != self.J1:
-                ar['Multipol_Int']['TKQ1'] = self.TKQ1
-                ar['Multipol_Int']['Kmax1'] = self.Kmax1
-            # Vmult
-            ar['Multipol_Int']['Vmult'] = self.Vmult
-            del ar
-            print("Multipolar interactions and other data stored in %s.h5" % (fname))
 
     def __gener_TKQ(self, J0, J1=None, conv_mon_dipol='sph_tensor'):
         """
@@ -709,6 +516,181 @@ class Multipolar:
                 mat_in = self.TKQ['%s_%s' % (K, Q)].copy()
                 tmp = np.dot(trnmat, mat_in)
                 self.TKQ['%s_%s' % (K, Q)] = np.dot(tmp, trnmat.transpose().conjugate())
+
+
+def Mult_interact(V4_ind, VM, VM1, MagInt, fname='V_Mult.dat', tol_prnt=5e-7):
+    """
+    Transform V4 from atomic states to a multipolar basis and save the results to a file.
+
+    This function transforms the interactions represented in atomic states (V4_ind) into a multipolar basis
+    and stores the results in a file. It calculates the transformed interactions for various multipole components
+    and coordinates, providing a detailed view of the transformed interactions.
+
+    Parameters:
+    -----------
+    V4_ind : dict
+         A dictionary containing atomic state interactions, typically generated from atomic calculations.
+    VM : Multipolar object
+         Multipolar instance for the first site
+    VM : Multipolar object
+         Multipolar instance for the second site
+    MagInt : MagIntType
+         An instance of the MagIntType class containing information about multipolar interactions.
+    fname : str
+         The name of the file where the transformed multipolar interactions will be saved. Default is 'V_Mult.dat'.
+    tol_prnt : float
+         A tolerance threshold for printing transformed interactions. Interactions with absolute values below this
+         threshold will not be printed. Default is 1e-6.
+
+    Returns:
+    --------
+    Vmult (dict): A dictionary containing the transformed multipolar interactions.
+    """
+
+    if (mpi.is_master_node()):
+        f = open(fname, 'w')
+        Vmult = {}
+        for int in MagInt.Interactions:
+            pair = MagInt.int_pairs[int]
+            for key0 in pair.R_vec:
+                (type0, mul0), (type1, mul1) = key0
+                dim0 = MagInt.GSM[type0]
+                dim1 = MagInt.GSM[type1]
+                f.write("\n -----INTERACTION: %s_%s - %s_%s\n" % (type0, mul0, type1, mul1))
+                # for i in range(pair.nshells):
+                nsh_max = min(len(pair.coor_num[key0]), pair.nshells)
+                for i in range(nsh_max):
+                    f.write("\nShell=%s\n" % (i))
+                    f.write("\nCoor_num = %s\n" % (pair.coor_num[key0][i]))
+                    # cycle over multipoles
+                    for K in range(VM.Kmax + 1):
+                        if VM.product:
+                            Qmax = VM.Qmax[K]
+                        else:
+                            Qmax = K
+                        N = 2 * Qmax + 1
+                        for K1 in range(VM1.Kmax + 1):
+                            if VM1.product:
+                                Qmax1 = VM1.Qmax[K1]
+                            else:
+                                Qmax1 = K1
+                            N1 = 2 * Qmax1 + 1
+                            st = '          '
+                            for qq in range(-Qmax1, Qmax1 + 1): st += VM1.prn_bas['%s_%s' % (K1, qq)]
+                            if VM.product:
+                                st_int='(%s)'%(VM.mult_names_new[K])
+                            else:
+                                st_int='(%s)'%(multipole_names[K])
+                            if VM1.product:
+                                st_int+='-(%s) interactions'%(VM1.mult_names_new[K1])
+                            else:
+                                st_int+='-(%s) interactions'%(multipole_names[K1])
+                            f.write("\n%s\n"%st_int)
+                            for i1 in range(pair.coor_num[key0][i]):
+                                R_key = "%s_%s" % (i, i1)
+                                key = "%s_%s_%s_%s_%s" % (type0, mul0, type1, mul1, R_key)
+                                if (key in V4_ind):
+                                    V4 = V4_ind[key]
+                                    m_key = key + "_%s_%s" % (K, K1)
+                                    # f.write("m_key=%s\n"%(m_key))
+                                    Vmult[m_key] = np.zeros([N, N1], complex)
+                                    for Q in range(-Qmax, Qmax + 1):
+                                        mat = VM.TKQ['%s_%s' % (K, Q)] / VM.TKQ_norm['%s_%s' % (K, Q)]
+                                        for Q1 in range(-Qmax1, Qmax1 + 1):
+                                            mat1 = VM1.TKQ['%s_%s' % (K1, Q1)] / VM1.TKQ_norm[
+                                                '%s_%s' % (K1, Q1)]
+                                            for j in range(dim0):
+                                                for k in range(dim0):
+                                                    for l in range(dim1):
+                                                        for m in range(dim1):
+                                                            Vmult[m_key][Qmax + Q, Qmax1 + Q1] += mat[j, k] * \
+                                                                                                       V4[
+                                                                                                           j, k, l, m] * \
+                                                                                                       mat1[l, m]
+                                    av_val = np.mean(abs(Vmult[m_key]))
+                                    if av_val > tol_prnt:
+                                        f.write("\n R = %s\n" % (pair.R_vec[key0][R_key]))
+                                        f.write(" T = %s\n" % (np.array(pair.T_vec[key0][R_key])))
+                                        # f.write(
+                                        #    " D = %s\n" % (np.round(np.linalg.norm(pair.R_vec[key0][R_key])), 5))
+                                        f.write("\n%s\n" % (st))
+                                        prn_imag = False
+                                        if np.mean(abs(Vmult[m_key].imag)) > tol_prnt: prn_imag = True
+                                        for Q in range(-Qmax, Qmax + 1):
+                                            st1 = "%s" % (VM.prn_bas['%s_%s' % (K, Q)])
+                                            for Q1 in range(-Qmax1, Qmax1 + 1):
+                                                if prn_imag:
+                                                    st1 += '{0: ^11.4f}'.format(
+                                                        1000.0 * Vmult[m_key][Qmax + Q, Qmax1 + Q1].real)
+                                                    st1 += '{0: ^+8.4f}I'.format(
+                                                        1000.0 * Vmult[m_key][Qmax + Q, Qmax1 + Q1].imag)
+                                                else:
+                                                    st1 += '{0: ^10.4f}'.format(
+                                                        1000.0 * Vmult[m_key][Qmax + Q, Qmax1 + Q1].real)
+                                            f.write("%s\n" % (st1))
+        f.close()
+
+    return Vmult
+
+def store_results_in_h5(Vmult, MagInt, fname, VM, VM1 = None):
+    """
+    Store essential data in an HDF5 file for future reference.
+
+    This function is used to store important data related to multipolar interactions and other related information
+    in an HDF5 file. The stored data can be used for future analysis, reference, or sharing with other users.
+
+    Parameters:
+    -----------
+    Vmult : dict,
+          dictionary of multipolar couplings
+    MagInt : MagIntType
+         An instance of the MagIntType class containing information about multipolar interactions.
+    fname : str
+         The name of the HDF5 file (excluding the '.h5' extension) where the data will be stored.
+    VM : Multipolar object
+         Multipolar instance for the first site
+    VM1 : Multipolar object
+         Multipolar instance for the second site
+    """
+    if (mpi.is_master_node()):
+        ar = HDFArchive(fname + '.h5', 'a')
+        if not ('Multipol_Int' in ar):
+            ar.create_group('Multipol_Int')
+        # data on types, interacting pairs, ground-state multiplicity
+        ar['Multipol_Int']['interactions'] = MagInt.Interactions
+        ar['Multipol_Int']['GSM'] = MagInt.GSM
+        for int in MagInt.Interactions:
+            int_key = '%s-%s' % (int[0], int[1])
+            pairs = MagInt.int_pairs[int]
+            ar['Multipol_Int']['shells_%s' % (int_key)] = pairs.nshells
+            ar['Multipol_Int']['coor_nums_%s' % (int_key)] = pairs.coor_num
+            ar['Multipol_Int']['R_vecs_%s' % (int_key)] = pairs.R_vec
+            ar['Multipol_Int']['T_vecs_%s' % (int_key)] = pairs.T_vec
+        # essential on tensors
+        ar['Multipol_Int']['Kmax'] = VM.Kmax
+        ar['Multipol_Int']['ifproduct'] = VM.product
+        if VM.product:
+            ar['Multipol_Int']['Qmax'] = VM.Qmax
+            ar['Multipol_Int']['multipole_names'] = VM.mult_names_new
+        else:
+            ar['Multipol_Int']['multipole_names'] = multipole_names
+        ar['Multipol_Int']['prn_bas'] = VM.prn_bas
+        ar['Multipol_Int']['TKQ'] = VM.TKQ
+        # generalised
+        if VM1 is not None:
+            ar['Multipol_Int']['Kmax1'] = VM1.Kmax
+            ar['Multipol_Int']['ifproduct1'] = VM1.product
+            if VM1.product:
+                ar['Multipol_Int']['Qmax1'] = VM1.Qmax
+                ar['Multipol_Int']['multipole_names1'] = VM1.mult_names_new
+            else:
+                ar['Multipol_Int']['multipole_names1'] = multipole_names
+            ar['Multipol_Int']['prn_bas1'] = VM1.prn_bas
+            ar['Multipol_Int']['TKQ1'] = VM1.TKQ
+        # Vmult
+        ar['Multipol_Int']['Vmult'] = Vmult
+        del ar
+        print("Multipolar interactions and other data stored in %s.h5" % (fname))
 
 
 def Wigner3j(j1, j2, j3, m1, m2, m3):
