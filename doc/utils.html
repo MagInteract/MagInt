@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Utils &#8212; MagInt 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Run MagInt" href="run_magint.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-MagInt.utils">
+<span id="utils"></span><h1>Utils<a class="headerlink" href="#module-MagInt.utils" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.Kanamori_hamiltonian">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">Kanamori_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U_int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J_hund</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orbital</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft_exec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.Kanamori_hamiltonian" title="Link to this definition">¶</a></dt>
+<dd><p>Constructs the Kanamori Hamiltonian in the Wien2k format or returns the double counting
+for the Kanamori convention.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>U_int</strong> (<em>float</em>) – The screened Coulomb interaction value.</p></li>
+<li><p><strong>J_hund</strong> (<em>float</em>) – The Hund’s exchange coupling value.</p></li>
+<li><p><strong>orbital</strong> (<em>int</em>) – Defines the orbital angular momentum quantum number (l).
+For instance, for d orbitals, this would be 2.</p></li>
+<li><p><strong>dft_exec</strong> (<em>str</em>) – The DFT executable being used. Currently, only ‘Wien2k’ is supported.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>U_full</strong> (<em>ndarray</em>) – The full Kanamori Hamiltonian matrix in the given DFT executable’s format.</p></li>
+<li><p><strong>U_dc</strong> (<em>float</em>) – The double counting term for the Coulomb interaction.</p></li>
+<li><p><strong>J_dc</strong> (<em>float</em>) – The double counting term for Hund’s exchange interaction.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.compare_dicts">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">compare_dicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.compare_dicts" title="Link to this definition">¶</a></dt>
+<dd><p>Compare two dictionaries for equality, with support for numpy arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dict1</strong> (<em>dict</em>) – The first dictionary to compare.</p></li>
+<li><p><strong>dict2</strong> (<em>dict</em>) – The second dictionary to compare.</p></li>
+<li><p><strong>rtol</strong> (<em>float</em><em>, </em><em>optional</em>) – The relative tolerance parameter for numpy array comparison (default is 1e-5).</p></li>
+<li><p><strong>atol</strong> (<em>float</em><em>, </em><em>optional</em>) – The absolute tolerance parameter for numpy array comparison (default is 1e-8).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns True if both dictionaries are the same; otherwise, False.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.compare_lists_arrays">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">compare_lists_arrays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.compare_lists_arrays" title="Link to this definition">¶</a></dt>
+<dd><p>Compare two lists of NumPy arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list1</strong> (<em>list</em>) – First list of NumPy arrays.</p></li>
+<li><p><strong>list2</strong> (<em>list</em>) – Second list of NumPy arrays.</p></li>
+<li><p><strong>rtol</strong> (<em>float</em>) – Relative tolerance.</p></li>
+<li><p><strong>atol</strong> (<em>float</em>) – Absolute tolerance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if all corresponding arrays in the lists are equal within the given tolerance, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.cub_eal">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">cub_eal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.cub_eal" title="Link to this definition">¶</a></dt>
+<dd><p>Extracts the transformation matrix from the ‘real_d_harms’ file.</p>
+<p>Reads the ‘real_d_harms’ file and constructs the transformation matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> (<em>int</em>) – The dimension of the square transformation matrix to be constructed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The transformation matrix of shape (dim, dim) populated with complex values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.gener_L_mat">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">gener_L_mat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.gener_L_mat" title="Link to this definition">¶</a></dt>
+<dd><p>Generate the total angular momentum matrices Jx, Jy, Jz, J+, and J-.</p>
+<p>This function constructs the total angular momentum matrices (Jx, Jy, Jz, J+, and J-)
+for a given quantum number j. The matrices are based on the quantum mechanics definitions
+for angular momentum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>j</strong> (<em>float</em>) – The total angular momentum quantum number.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the angular momentum matrices ‘x’, ‘y’, ‘z’, ‘p’ (which corresponds to J+), and ‘m’
+(which corresponds to J-), where each key maps to its respective matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.gener_M_mat">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">gener_M_mat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.gener_M_mat" title="Link to this definition">¶</a></dt>
+<dd><p>Generate magnetic moment operator matrices.</p>
+<p>Constructs the magnetic moment operators (Mx, My, and Mz) from the given
+orbital (L) and spin (S) angular momentum matrices using the Landé g-factor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<em>dict</em>) – Dictionary containing the orbital angular momentum matrices ‘x’, ‘y’, and ‘z’.</p></li>
+<li><p><strong>S</strong> (<em>dict</em>) – Dictionary containing the spin angular momentum matrices ‘x’, ‘y’, and ‘z’.</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – Landé g-factor used to weight the contribution from orbital angular momentum.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the magnetic moment matrices ‘x’, ‘y’, and ‘z’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.gener_S_mat">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">gener_S_mat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nlm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.gener_S_mat" title="Link to this definition">¶</a></dt>
+<dd><p>Generate the spin matrices Sx, Sy, Sz, Sp and Sm, where Sp/Sm are the S+/- ladder operators respectively.</p>
+<p>This function creates the three spin matrices for a given dimension.
+The matrices are constructed in a larger 2D space, where the original dimension is multiplied by 2
+to account for spin up and spin down states. Each spin matrix is represented in the Pauli matrix form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nlm</strong> (<em>int</em>) – Dimension for which the spin matrices are to be constructed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the spin matrices ‘x’, ‘y’, ‘z’, ‘p’, ‘m’ , where each key maps to its respective
+spin matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.my_get_vec">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">my_get_vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.my_get_vec" title="Link to this definition">¶</a></dt>
+<dd><p>Extracts a specific vector from the ‘STATES’ file.</p>
+<p>Reads the ‘STATES’ file and retrieves the vector number <cite>iv</cite>.
+The structure of each line in ‘STATES’ is expected to have the format
+of a complex number in parenthesis, e.g., <cite>(real,imag)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – The total number of vectors in the ‘STATES’ file.</p></li>
+<li><p><strong>iv</strong> (<em>int</em>) – The index of the vector to be extracted (0-based index).</p></li>
+<li><p><strong>vec</strong> (<em>list</em><em> or </em><em>ndarray</em>) – An initialized list or array to store the extracted vector values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated list or array containing the values of the extracted vector.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list or ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.print_arr">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">print_arr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'arr'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prn_zero_imag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.print_arr" title="Link to this definition">¶</a></dt>
+<dd><p>Print the real and/or imaginary parts of an array with customizable format.</p>
+<p>This function is designed to print either the real part, imaginary part,
+or both of an array, depending on the presence of non-zero values in these
+parts and the parameters provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>numpy.ndarray</em>) – The array to be printed. Should be a two-dimensional array.</p></li>
+<li><p><strong>log</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for the output. Defaults to ‘arr’.</p></li>
+<li><p><strong>fname</strong> (<em>str</em><em>, </em><em>optional</em>) – If provided, the output will be written to a file with this name.
+Otherwise, it will be printed to the standard output. Defaults to None.</p></li>
+<li><p><strong>decd</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of decimal places for the printed values. Defaults to 4.</p></li>
+<li><p><strong>prn_zero_imag</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the imaginary part of the array will always be printed,
+even if it’s zero. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.print_mat">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">print_mat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.print_mat" title="Link to this definition">¶</a></dt>
+<dd><p>Print the real and imaginary parts of a matrix in a formatted manner.</p>
+<p>This function is designed to display each element of the matrix with its
+real and imaginary components. The output is formatted to show up to 5 decimal
+places for both the real and imaginary parts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mat</strong> (<em>numpy.ndarray</em>) – The matrix to be printed. Should be a square matrix with both real and imaginary parts.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The output format for each element is: “real_part imaginary_part”, with each part displayed with up to 5 decimal
+places.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.read_eal">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">read_eal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eal_fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlms</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.read_eal" title="Link to this definition">¶</a></dt>
+<dd><p>Read the Effective Atomic Levels (EAL) from a file and store it in a dictionary format.</p>
+<p>This function reads the EAL data from the specified file. The EAL data is expected
+to contain real and imaginary parts, which are combined into a complex number.
+The processed data is then stored in a dictionary with a key ‘ud’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eal_fname</strong> (<em>str</em>) – Path to the file containing the EAL data.</p></li>
+<li><p><strong>nlms</strong> (<em>int</em>) – Dimension of the EAL square matrix. It indicates the number of rows and columns of the matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing the EAL data as a complex matrix under the ‘ud’ key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MagInt.utils.read_mat">
+<span class="sig-prename descclassname"><span class="pre">MagInt.utils.</span></span><span class="sig-name descname"><span class="pre">read_mat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat_fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.utils.read_mat" title="Link to this definition">¶</a></dt>
+<dd><p>Read a matrix from a file and convert it to a complex format.</p>
+<p>This function reads data from the specified file where the data is expected to have real and
+imaginary parts presented in separate columns. The function combines these parts into complex numbers
+and arranges them into a complex matrix of appropriate dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mat_fname</strong> (<em>str</em>) – Path to the file containing the matrix data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A complex matrix constructed from the real and imaginary parts read from the file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">MagInt</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#maginteract">MagInteract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#hubbardi-interact">HubbardI_interact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#hubbardi-solver">HubbardI_solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#multipolar">Multipolar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#shells">Shells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#read-kp-sym">Read_kp_sym</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#read-input">Read Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-dos">run_dos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-shift-mu">run_shift_mu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-shell">run_shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-magint">run_magint</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="documentation.html#utils">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="documentation.html">Documentation</a><ul>
+      <li>Previous: <a href="run_magint.html" title="previous chapter">Run MagInt</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Leonid Pourovskii and Dario Fiore Mosca.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

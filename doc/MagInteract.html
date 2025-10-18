@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>MagInteract &#8212; MagInt 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Hubbard Interact" href="HubbardI_interact.html" />
+    <link rel="prev" title="Documentation" href="documentation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-MagInt.MagInteract">
+<span id="maginteract"></span><h1>MagInteract<a class="headerlink" href="#module-MagInt.MagInteract" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="MagInt.MagInteract.MagInteract">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MagInt.MagInteract.</span></span><span class="sig-name descname"><span class="pre">MagInteract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">general_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magint_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_corrsite</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GSM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SK</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S_HI</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GF_tmat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.MagInteract.MagInteract" title="Link to this definition">¶</a></dt>
+<dd><p>Implements the force-theorem Hubbard-I (FT-HI) approach to intersite
+exchange interactions in correlated insulators.
+The formalism is given in L. V. Pourovskii Phys. Rev. B 94, 115117 (2016)
+This Python-3 version is based on TRIQS library</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.MagInteract.MagInteract.Retrieve_StBas">
+<span class="sig-name descname"><span class="pre">Retrieve_StBas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h5name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Standard_Basis.h5'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.MagInteract.MagInteract.Retrieve_StBas" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves the standard basis from Standard_Basis.h5.</p>
+<section id="parameters">
+<h2>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>self<span class="classifier">object</span></dt><dd><p>The instance of the class.</p>
+</dd>
+<dt>item<span class="classifier">list</span></dt><dd><p>A list containing the group and item names to retrieve from the HDF5 file, e.g., [h5_group, h5_item].</p>
+</dd>
+<dt>h5name<span class="classifier">str, optional</span></dt><dd><p>The name of the HDF5 file where the standard basis is stored. Default is ‘Standard_Basis.h5’.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns:<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>StBas<span class="classifier">np.ndarray</span></dt><dd><p>The retrieved standard basis as a NumPy array.</p>
+</dd>
+</dl>
+<p>This function reads the standard basis from an HDF5 file and returns it as a NumPy array.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.MagInteract.MagInteract.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">general_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magint_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_corrsite</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GSM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SK</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S_HI</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GF_tmat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.MagInteract.MagInteract.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Constructor for initializing magnetic interaction calculations.</p>
+<section id="id1">
+<h2>Parameters:<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>general_par<span class="classifier">dict</span></dt><dd><p>Dictionary containing general parameters, e.g., ‘dft_exec’ specifying the DFT execution type and ‘filename’.</p>
+</dd>
+<dt>magint_par<span class="classifier">dict</span></dt><dd><p>Dictionary containing parameters specific to magnetic interactions, e.g., ‘atom1’, ‘atom2’, and ‘n_shells’.</p>
+</dd>
+<dt>label_corrsite<span class="classifier">dict</span></dt><dd><p>Label for the correlated sites.</p>
+</dd>
+<dt>GSM<span class="classifier">object, optional</span></dt><dd><p>Green’s function mesh. None by default.</p>
+</dd>
+<dt>SK<span class="classifier">object, optional</span></dt><dd><p>Object containing structural information. None by default.</p>
+</dd>
+<dt>S_HI<span class="classifier">object, optional</span></dt><dd><p>Object containing information on the Hamiltonian interaction structure. None by default.</p>
+</dd>
+<dt>GF_tmat<span class="classifier">list or None, optional</span></dt><dd><p>List of transformation matrices to apply to intersite GF at each k-point, if required. None by default.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.MagInteract.MagInteract.calc_MagInt">
+<span class="sig-name descname"><span class="pre">calc_MagInt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">general_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S_INT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_per_shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calc_off_diag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_CF</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_arr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_arr_site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Sigma_fix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.MagInteract.MagInteract.calc_MagInt" title="Link to this definition">¶</a></dt>
+<dd><p>Perform calculation of magnetic pair interactions by considering the
+intersite Green’s function and the Hubbard-I self-energy.</p>
+<p>The function calculates magnetic pair interactions by first reading the real-space
+intersite vectors R, generating k-mesh in the full Brillouin zone, and then calculating
+the intersite Green’s function G_R. The interactions are then computed with the Hubbard-I
+self-energy. The interactions are stored and printed in meV.</p>
+<section id="id2">
+<h2>Parameters:<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>general_par<span class="classifier">dict</span></dt><dd><p>General parameters required for the calculation.</p>
+</dd>
+<dt>S_INT<span class="classifier">dict</span></dt><dd><p>Hubbard-I self-energy.</p>
+</dd>
+<dt>one_per_shell<span class="classifier">bool, optional</span></dt><dd><p>Calculate only one interaction for each coordinate shell. Default is False.</p>
+</dd>
+<dt>calc_off_diag<span class="classifier">bool, optional</span></dt><dd><p>Calculate off-diagonal interactions. Default is False.</p>
+</dd>
+<dt>remove_CF<span class="classifier">bool, optional</span></dt><dd><p>Remove crystal field. Default is False.</p>
+</dd>
+<dt>R_arr<span class="classifier">np.ndarray or None, optional</span></dt><dd><p>Real-space lattice vectors connecting correlated sites. Default is None.</p>
+</dd>
+<dt>R_arr_site<span class="classifier">np.ndarray or None, optional</span></dt><dd><p>Sites corresponding to the real-space vectors in <cite>R_arr</cite>. Default is None.</p>
+</dd>
+<dt>Sigma_fix<span class="classifier">np.ndarray or None, optional</span></dt><dd><p>Fixed self-energy input. If provided, Sigma will be set to this value. Default is None.</p>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h2>Returns:<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>V<span class="classifier">dict</span></dt><dd><p>Calculated magnetic interactions.</p>
+</dd>
+<dt>V_4ind<span class="classifier">dict</span></dt><dd><p>Full 4-index magnetic interactions if <cite>calc_off_diag</cite> is True.</p>
+</dd>
+<dt>int_pairs<span class="classifier">dict</span></dt><dd><p>Interaction pairs for the calculated interactions.</p>
+</dd>
+</dl>
+</section>
+<section id="notes">
+<h2>Notes:<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
+<p>For Wien2k executions, the lattice vectors are read from the “.outputnn” file.
+Local rotations are suppressed during the calculation.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.MagInteract.MagInteract.inter_site_GF">
+<span class="sig-name descname"><span class="pre">inter_site_GF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">general_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G_off</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G_off_inv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.MagInteract.MagInteract.inter_site_GF" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates inter-site Green’s Functions (GF) for all required pair vectors.</p>
+<p>The function computes the inter-site GF based on the Bloch’s theorem and updates the <cite>G_off</cite> dictionary with
+the Fourier-transformed GF values. This function also handles the inversion symmetry to update the <cite>G_off_inv</cite>
+dictionary.</p>
+<section id="id4">
+<h2>Parameters:<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>general_par<span class="classifier">dict</span></dt><dd><p>Dictionary of general parameters. Must include ‘dft_exec’ which specifies the DFT execution type
+(either ‘Wien2k’ or ‘Vasp’).</p>
+</dd>
+<dt>G_off<span class="classifier">dict</span></dt><dd><p>Dictionary to store the Fourier-transformed inter-site GF. The keys are constructed from type0, type1,
+and R_key.</p>
+</dd>
+<dt>G_off_inv<span class="classifier">dict</span></dt><dd><p>Dictionary to store the Fourier-transformed inter-site GF considering inversion symmetry. It has the
+same structure as G_off.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h2>Returns:<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>None.</dt><dd><p>The method updates the dictionaries <cite>G_off</cite> and <cite>G_off_inv</cite> in-place.</p>
+</dd>
+</dl>
+</section>
+<section id="raises">
+<h2>Raises:<a class="headerlink" href="#raises" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>AssertionError</dt><dd><p>If the given block names in G_off are neither ‘up/down’ nor ‘ud’.
+If there’s an inconsistency between direct and inv transformed sites.
+If there’s a key error for constructed keys in G_off.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.MagInteract.MagInteract.reorder_V">
+<span class="sig-name descname"><span class="pre">reorder_V</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">V</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orl</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.MagInteract.MagInteract.reorder_V" title="Link to this definition">¶</a></dt>
+<dd><p>Reorders V4 in accordance with the permutation matrix order.</p>
+<section id="id6">
+<h2>Parameters:<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>self<span class="classifier">object</span></dt><dd><p>The instance of the class.</p>
+</dd>
+<dt>V<span class="classifier">dict</span></dt><dd><p>A dictionary containing complex-valued matrices.</p>
+</dd>
+<dt>V4<span class="classifier">dict</span></dt><dd><p>A dictionary containing complex-valued rank-4 tensors.</p>
+</dd>
+<dt>orl<span class="classifier">list</span></dt><dd><p>A list containing the permutation order.</p>
+</dd>
+</dl>
+<p>This function reorders the rank-4 tensors in <cite>V4</cite> according to the permutation order <cite>orl</cite>.
+The result is stored back in the <cite>V4</cite> dictionary.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.MagInteract.MagInteract.rot_stbas">
+<span class="sig-name descname"><span class="pre">rot_stbas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">StBas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_el</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rot_mat_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rot_time_rev</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.MagInteract.MagInteract.rot_stbas" title="Link to this definition">¶</a></dt>
+<dd><p>Rotate standard basis</p>
+<section id="id7">
+<h2>Parameters:<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>StBas<span class="classifier">np.ndarray</span></dt><dd><p>initial standard basis</p>
+</dd>
+<dt>n_el<span class="classifier">integer</span></dt><dd><p>shell occupancy</p>
+</dd>
+<dt>nlm<span class="classifier">integer</span></dt><dd><p>shell orbital degeneracy</p>
+</dd>
+<dt>rot_mat_in<span class="classifier">np.ndarray</span></dt><dd><p>one-electron rotation matrix
+of dimension ( nlm*2 x nlm*2 ) if SO included or ( nlm x nlm ) otherwise</p>
+</dd>
+<dt>rot_time_rev<span class="classifier">integer</span></dt><dd><p>=1 if time reversal is to be applied together with rotation</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h2>Returns:<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>StBas_out<span class="classifier">np.ndarray</span></dt><dd><p>transformed Standard Basis</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.MagInteract.MagInteract.trans_V">
+<span class="sig-name descname"><span class="pre">trans_V</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">V</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S_INT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.MagInteract.MagInteract.trans_V" title="Link to this definition">¶</a></dt>
+<dd><p>Transform V and V4 to a new basis given by transmat.</p>
+<section id="id9">
+<h2>Parameters:<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>self<span class="classifier">object</span></dt><dd><p>The instance of the class.</p>
+</dd>
+<dt>V<span class="classifier">dict</span></dt><dd><p>A dictionary of matrices to be transformed.</p>
+</dd>
+<dt>V4<span class="classifier">dict</span></dt><dd><p>A dictionary of 4-index matrices to be transformed.</p>
+</dd>
+<dt>transmat0<span class="classifier">np.ndarray or list</span></dt><dd><p>Transformation matrix for the first site. If a list, transmat0[0] is applied to the first site.</p>
+</dd>
+<dt>transmat1<span class="classifier">np.ndarray</span></dt><dd><p>Transformation matrix for the second site.</p>
+</dd>
+<dt>tol<span class="classifier">float, optional</span></dt><dd><p>Tolerance for considering small values as zero. Default is 1e-7.</p>
+</dd>
+<dt>site_list<span class="classifier">list, optional</span></dt><dd><p>List of two sites for which the transformation is applied. Default is None.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h2>Returns:<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
+<p>None</p>
+<p>Transforms the matrices in V and V4 to a new basis using the provided transformation matrices.</p>
+<ul class="simple">
+<li><p>If transmat0 is an np.ndarray, it’s applied to both sites.</p></li>
+<li><p>If transmat0 is a list, transmat0[0] is applied to the first site, and transmat1 is applied to the second site.</p></li>
+</ul>
+<p>The transformed matrices are stored back in V and V4.</p>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">MagInt</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="documentation.html#maginteract">MagInteract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#hubbardi-interact">HubbardI_interact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#hubbardi-solver">HubbardI_solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#multipolar">Multipolar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#shells">Shells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#read-kp-sym">Read_kp_sym</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#read-input">Read Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-dos">run_dos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-shift-mu">run_shift_mu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-shell">run_shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-magint">run_magint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#utils">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="documentation.html">Documentation</a><ul>
+      <li>Previous: <a href="documentation.html" title="previous chapter">Documentation</a></li>
+      <li>Next: <a href="HubbardI_interact.html" title="next chapter">Hubbard Interact</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Leonid Pourovskii and Dario Fiore Mosca.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/MagInteract.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

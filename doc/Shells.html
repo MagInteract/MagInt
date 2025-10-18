@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Shells &#8212; MagInt 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Read K-points Symmetries" href="Read_kp_sym.html" />
+    <link rel="prev" title="Multipolar" href="Multipolar.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-MagInt.Shells">
+<span id="shells"></span><h1>Shells<a class="headerlink" href="#module-MagInt.Shells" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="MagInt.Shells.shells">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MagInt.Shells.</span></span><span class="sig-name descname"><span class="pre">shells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">general_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interacting_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interact_sites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interact_basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_n_shells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_vecs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Translation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_arr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_arr_site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_arr_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calc_all_sites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.Shells.shells" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize the class for analyzing interacting shells in various DFT software outputs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.Shells.shells.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">general_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interacting_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interact_sites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interact_basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_n_shells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_vecs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Translation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_arr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_arr_site</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_arr_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calc_all_sites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.Shells.shells.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize the class for analyzing interacting shells in various DFT software outputs.</p>
+<section id="parameters">
+<h2>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>general_par<span class="classifier">dict</span></dt><dd><p>General parameters dictionary containing:</p>
+<ul class="simple">
+<li><p>‘dft_exec’ (str): Specifies the DFT software (‘Wien2k’, ‘Vasp’, etc.).</p></li>
+<li><p>‘verbosity’ (int): Specifies the verbosity level.</p></li>
+<li><dl class="simple">
+<dt>‘tol_shells’ (int): tollerance N for vectors length difference 10^(-N)</dt><dd><p>in sorting them between coordination shells</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>filename<span class="classifier">str, optional</span></dt><dd><p>File name for the data. Defaults to None.</p>
+</dd>
+<dt>interacting_types<span class="classifier">list, optional</span></dt><dd><p>List of two atom types that are interacting. Defaults to None.</p>
+</dd>
+<dt>interact_sites<span class="classifier">list, optional</span></dt><dd><p>List of interacting sites. Defaults to None.</p>
+</dd>
+<dt>interact_basis<span class="classifier">list, optional</span></dt><dd><p>Basis for the interaction. Defaults to None.</p>
+</dd>
+<dt>max_n_shells<span class="classifier">int, optional</span></dt><dd><p>Maximum number of shells to consider. Defaults to 3.</p>
+</dd>
+<dt>R_arr<span class="classifier">list, optional</span></dt><dd><p>Custom array of interaction vectors. Defaults to None.</p>
+</dd>
+<dt>R_arr_site<span class="classifier">list, optional</span></dt><dd><p>Sites associated with R_arr. Defaults to None.</p>
+</dd>
+<dt>R_arr_origin<span class="classifier">list, optional</span></dt><dd><p>Origin points for R_arr. Defaults to None.</p>
+</dd>
+<dt>calc_all_sites<span class="classifier">bool</span></dt><dd><p>True: lattice vectors connecting all sites of given types are calculated
+False : only lattice vectors connecting the representative sites with all other sites are calculated</p>
+</dd>
+</dl>
+</section>
+<section id="notes">
+<h2>Notes:<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
+<p>This method initializes the class based on the DFT software specified in <cite>general_par[‘dft_exec’]</cite>.
+Currently supported DFT software are ‘Wien2k’ and ‘Vasp’. Support for ‘QuantumEspresso’ may be added in the future.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.Shells.shells.calc_d_origin">
+<span class="sig-name descname"><span class="pre">calc_d_origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.Shells.shells.calc_d_origin" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the minimal connecting vectors between the interaction sites
+of two atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>verbosity</strong> (<em>int</em><em>, </em><em>optional</em>) – Determines the amount of output information. Higher values produce more verbose output.
+Default value is 1.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>d_origin</strong> – A dictionary storing minimal connecting vectors between interaction
+sites for the specified atom pairs. Keys are tuples in the form
+(atom_type1, site1, atom_type2, site2), and the corresponding values
+are the minimal connecting vectors. This dictionary is also set as an
+attribute of the object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function uses R_arr_set to determine if lattice vectors have been
+read from an output file. If not, R_origins are assumed to be [0,0,0].
+The function also uses the method __shift_vec_ to correct for vectors
+crossing periodic boundaries.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MagInt.Shells.shells.find_nn">
+<span class="sig-name descname"><span class="pre">find_nn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_n_shells</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direct</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MagInt.Shells.shells.find_nn" title="Link to this definition">¶</a></dt>
+<dd><p>Finds the nearest neighbors, next nearest neighbors, and so on from the POSCAR
+file in VASP or case.outputnn in Wien2k. It also initializes the structural data necessary for MagInt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_n_shells</strong> (<em>int</em>) – Maximum number of shells to be considered when finding neighbors.</p></li>
+<li><p><strong>direct</strong> (<em>bool</em>) – If True, returns the basis vector. If False, returns the dot product
+of the a_brav.T matrix and the basis vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>nshells</strong> (<em>int</em>) – Number of shells found.</p></li>
+<li><p><strong>R_shell</strong> (<em>list of floats</em>) – Sorted list of unique distances, indicating the radial distances
+for each shell.</p></li>
+<li><p><strong>R_vec</strong> (<em>dict</em>) – Dictionary mapping each shell and coordinate number to the corresponding
+vector. The keys are strings in the format “nshell_coorNum”.</p></li>
+<li><p><strong>R_site</strong> (<em>dict</em>) – Dictionary similar to R_vec, but the values are initialized to 0.</p></li>
+<li><p><strong>coor_num</strong> (<em>list of ints</em>) – A list indicating the coordination number for each shell.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function uses the atom_list attribute to determine if only one atom type
+is present. It employs a brute-force approach, computing distances for all
+possible shell combinations up to max_n_shells, and then sorts and filters
+the results to extract the relevant shells and coordination numbers.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">MagInt</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#maginteract">MagInteract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#hubbardi-interact">HubbardI_interact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#hubbardi-solver">HubbardI_solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#multipolar">Multipolar</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="documentation.html#shells">Shells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#read-kp-sym">Read_kp_sym</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#read-input">Read Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-dos">run_dos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-shift-mu">run_shift_mu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-shell">run_shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#run-magint">run_magint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#utils">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="documentation.html">Documentation</a><ul>
+      <li>Previous: <a href="Multipolar.html" title="previous chapter">Multipolar</a></li>
+      <li>Next: <a href="Read_kp_sym.html" title="next chapter">Read K-points Symmetries</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Leonid Pourovskii and Dario Fiore Mosca.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/Shells.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
