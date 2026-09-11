@@ -13,7 +13,7 @@
 # ------------------------------------------------------------------------------------#
 from numpy import *
 import triqs.utility.mpi as mpi
-from triqs_dft_tools.converters.plovasp.vaspio import Poscar
+from triqs_dftkit.vasp.plovasp.vaspio import Poscar
 from MagInt.utils import *
 from MagInt.Parser import *
 import math

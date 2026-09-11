@@ -84,15 +84,15 @@ class Solver:
         self.tail = make_zero_tail(self.G_iw, self.Nmoments)
 
         # prepare self.ealmat
-        self.ealmat = np.zeros([self.Nlm * self.n_spin, self.Nlm * self.n_spin], np.complex_)
+        self.ealmat = np.zeros([self.Nlm * self.n_spin, self.Nlm * self.n_spin], np.complex128)
 
         # Define Atomic Levels Dictionary according to the GF Bloc Structure
         self.Eff_Atomic_Levels = {}
         for a, al in self.gf_struct:
             if (self.UseSpinOrbit):
-                self.Eff_Atomic_Levels[a] = np.zeros([self.Nlm * 2, self.Nlm * 2], np.complex_)
+                self.Eff_Atomic_Levels[a] = np.zeros([self.Nlm * 2, self.Nlm * 2], np.complex128)
             else:
-                self.Eff_Atomic_Levels[a] = np.zeros([self.Nlm, self.Nlm], np.complex_)
+                self.Eff_Atomic_Levels[a] = np.zeros([self.Nlm, self.Nlm], np.complex128)
 
     def solve(self, U_int=None, J_hund=None, T=None, verbosity=0, Iteration_Number=1, Test_Convergence=0.0001, n_lev=0,
               remove_split=False, u4ind=None):
@@ -181,7 +181,7 @@ class Solver:
         self.ummss = ummss
 
         M = [x for x in self.G_iw.mesh]
-        self.zmsb = np.array([x for x in M], np.complex_)
+        self.zmsb = np.array([x for x in M], np.complex128)
 
         self.__save_eal('eal.dat', Iteration_Number)
 
@@ -304,7 +304,7 @@ class Solver:
             assert 0
 
         delta_om = (ommax - ommin) / (1.0 * (N_om - 1))
-        omega = np.zeros([N_om], np.complex_)
+        omega = np.zeros([N_om], np.complex128)
 
         nlm = self.Nlm
         #if (self.UseSpinOrbit):
@@ -460,7 +460,7 @@ class Solver:
         # l = (Nlm-1)/2
         # If T is specified, it is used to transform the Basis set
         if self.l > 0:
-            Umat = U_matrix(l=self.l, U_int=U, J_hund=J, basis='spherical', T=T)
+            Umat = U_matrix_slater(l=self.l, U_int=U, J_hund=J, basis='spherical', T=T)
             U, Up = reduce_4index_to_2index(Umat)
         else:
             Umat = np.zeros((1, 1, 1, 1), dtype=float)

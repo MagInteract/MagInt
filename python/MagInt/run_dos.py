@@ -12,7 +12,7 @@
 #
 # ------------------------------------------------------------------------------------#
 from triqs_dft_tools.sumk_dft_tools import *
-from triqs_dft_tools.converters.wien2k import *
+from triqs_dftkit.wien2k import Converter as Wien2kConverter
 from triqs.gf import *
 from MagInt.HubbardI_solver import Solver as Solver
 from MagInt.Read_input import read_input_file

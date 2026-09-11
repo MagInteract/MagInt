@@ -7,11 +7,22 @@ Installation
 Prerequisites
 -------------
 
-#. The `TRIQS` library, see `TRIQS installation instruction <https://triqs.github.io/triqs/latest/install.html>`_.
+#. The `TRIQS` library version 4.0.x, see `TRIQS installation instruction <https://triqs.github.io/triqs/latest/install.html>`_.
+
+#. `TRIQS/DFTTools <https://triqs.github.io/dft_tools/latest/>`_, together with
+   `TRIQS/dftkit <https://triqs.github.io/dftkit/latest/>`_, which provides the
+   DFT converters from TRIQS 4.0 onwards. Both are imported at run time.
+
+#. A Fortran compiler and LAPACK, used to build the Hubbard-I solver.
 
 #. Make sure to install besides the triqs requirements also the python packages::
 
-     $ pip3 install --user scipy pytest f90wrap
+     $ pip3 install --user scipy pytest f90wrap meson ninja
+
+   ``f90wrap`` generates the Fortran wrapper at configure time and is imported
+   again at run time by the generated module, so it has to remain installed.
+   ``meson`` and ``ninja`` are the build backend that ``f2py`` uses from NumPy
+   1.26 onwards.
 
 #. To build the documentation the following extra python packages are needed::
 
@@ -27,7 +38,7 @@ INSTALL_PREFIX to point to your TRIQS installation directory::
     
     INSTALL_PREFIX=/path/to/triqs
     # source the triqsvars.sh file from your TRIQS installation to load the TRIQS environment
-    source $(INSTALL_PREFIX)/share/triqs/triqsvars.sh
+    source $INSTALL_PREFIX/share/triqs/triqsvars.sh
 
     # clone the MagInt repository from GitHub
     git clone https://github.com/MagInteract/MagInt.git magint.src
@@ -39,6 +50,7 @@ INSTALL_PREFIX to point to your TRIQS installation directory::
     cmake ../magint.src
 
     # Compile the code, run the tests, and install the application
+    make
     make test
     make install
 
@@ -46,7 +58,7 @@ This installs MagInt into your TRIQS installation folder.
 
 To build ``MagInt`` with documentation you should run::
 
-     $ cmake path/to/magint.src -DBuild_Documentation=ON
+     $ cmake path/to/magint.src -DBUILD_DOC=ON
      $ make 
      $ sphinx-autobuild path/to/magint.src/doc ./doc/html -c ./doc/
 
@@ -54,7 +66,7 @@ To build ``MagInt`` with documentation you should run::
 Version compatibility
 ---------------------
 
-The release version ``MagInt`` 1.0 is compatible with TRIQS 3.1.x
+The release version ``MagInt`` 3.0 is compatible with TRIQS 4.0.x
 
 Custom CMake options
 --------------------
@@ -66,11 +78,12 @@ The compilation of ``MagInt`` can be configured using CMake-options::
 +-----------------------------------------------------------------+-----------------------------------------------+
 | Options                                                         | Syntax                                        |
 +=================================================================+===============================================+
-| Specify an installation path other than path_to_triqs           | -DCMAKE_INSTALL_PREFIX=path_to_solid_dmft     |
+| Specify an installation path other than path_to_triqs           | -DCMAKE_INSTALL_PREFIX=path_to_magint         |
 +-----------------------------------------------------------------+-----------------------------------------------+
 | Build in Debugging Mode                                         | -DCMAKE_BUILD_TYPE=Debug                      |
 +-----------------------------------------------------------------+-----------------------------------------------+
-| Disable testing (not recommended)                               | -DBuild_Tests=OFF                             |
+| Build the documentation                                         | -DBUILD_DOC=ON                                |
 +-----------------------------------------------------------------+-----------------------------------------------+
-| Build the documentation                                         | -DBuild_Documentation=ON                      |
-+-----------------------------------------------------------------+-----------------------------------------------+
+
+The build type defaults to ``Release`` when none is given. The test suite is
+always configured, so there is no option to disable it.

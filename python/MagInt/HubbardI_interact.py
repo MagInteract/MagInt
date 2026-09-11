@@ -182,21 +182,21 @@ class HubbardI_interact(Solver):
         if lad_bs:
             lad_op = self.lad_op
         else:
-            lad_op = np.zeros([N, N], np.complex_)
+            lad_op = np.zeros([N, N], np.complex128)
         if not isinstance(self.st_bas, np.ndarray):
             if self.n_bas == None:
                 MultNat = 1
                 self.n_bas = self.n_lev  # just initializing st_bas dimensions with something to have a proper array
             else:
                 MultNat = factorial(N) / factorial(N - self.gs_occ) / factorial(self.gs_occ)
-            self.st_bas = np.zeros([MultNat, self.n_bas], np.complex_)
+            self.st_bas = np.zeros([MultNat, self.n_bas], np.complex128)
         else:
             MultNat = self.st_bas.shape[0]
             self.n_bas = self.st_bas.shape[1]
 
         M = [x for x in self.G_iw.mesh]
-        self.zmsb = np.array([x for x in M], np.complex_)
-        self.ovlmat = np.zeros((self.n_bas, self.n_lev), dtype=np.complex_, order='F')
+        self.zmsb = np.array([x for x in M], np.complex128)
+        self.ovlmat = np.zeros((self.n_bas, self.n_lev), dtype=np.complex128, order='F')
 
         self.__save_eal("eal_in_HubI_interact")
 
@@ -350,7 +350,7 @@ class HubbardI_interact(Solver):
 
     def __set_umatrix(self, U, J, T=None):
         if self.l > 0:
-            Umat = U_matrix(l=self.l, U_int=U, J_hund=J, T=T)
+            Umat = U_matrix_slater(l=self.l, U_int=U, J_hund=J, T=T)
             U, Up = reduce_4index_to_2index(Umat)
         else:
             Umat = np.zeros((1, 1, 1, 1), dtype=float)
@@ -395,12 +395,12 @@ class HubbardI_interact(Solver):
             ealmat['ud']=eal['ud'].copy()
         else:
             Nlm = eal['up'].shape[0]
-            ealmat['ud'] = np.zeros((Nlm * 2, Nlm * 2), np.complex)
+            ealmat['ud'] = np.zeros((Nlm * 2, Nlm * 2), np.complex128)
             ealmat['ud'][0:Nlm, 0:Nlm] = eal['up']
             ealmat['ud'][Nlm:2 * Nlm, Nlm:2 * Nlm] = eal['down']
         nlms=ealmat['ud'].shape[0]
         nlm=int(nlms/2)
-        if rmat.shape[0]==nlm:
+        if rmat is not None and rmat.shape[0]==nlm:
             # only orbital-space rotation is given (no SO)
             rmat_tmp=rmat.copy()
             rmat=np.zeros((nlms,nlms),complex)

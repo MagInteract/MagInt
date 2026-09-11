@@ -31,7 +31,13 @@ set (MAGINT_RELEASE "3.0.0")
 list(APPEND CMAKE_MODULE_PATH ${TRIQS_PATH}/share/cmake/Modules)
 
 # start configuration
-set(CMAKE_BUILD_TYPE Release)
+# Default to Release build type
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Type of build" FORCE)
+endif()
+if(NOT IS_SUBPROJECT)
+  message(STATUS "-------- BUILD-TYPE: ${CMAKE_BUILD_TYPE} --------")
+endif()
 enable_testing()
 
 # We use shared libraries

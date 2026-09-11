@@ -833,7 +833,7 @@ class MagInteract:
         dim0 = mpi.bcast(dim0)
         dim1 = mpi.bcast(dim1)
         if not mpi.is_master_node():
-            StBas = np.zeros([dim0, dim1], np.complex)
+            StBas = np.zeros([dim0, dim1], np.complex128)
         mpi.barrier()
         StBas = mpi.bcast(StBas)
         return StBas

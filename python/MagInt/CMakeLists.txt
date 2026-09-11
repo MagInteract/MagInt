@@ -9,5 +9,10 @@ set(PYTHON_LIB_DEST ${TRIQS_PYTHON_LIB_DEST_ROOT}/${PROJECT_NAME})
 #execute_process(COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/../../fortran/hubbard_I.py ${CMAKE_CURRENT_BINARY_DIR})
 
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} DESTINATION ${TRIQS_PYTHON_LIB_DEST_ROOT} FILES_MATCHING PATTERN "*.py" PATTERN "*_desc.py" EXCLUDE)
-execute_process(COMMAND ln -fs ${CMAKE_CURRENT_BINARY_DIR}/../../fortran/${FILE_NAME} ${CMAKE_BINARY_DIR}/python/hubbardI)
+# The python sources import the Fortran extension as `hubbardI.hubbard_I`, so
+# expose the fortran build directory under that name inside the build tree.
+execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
+                  ${CMAKE_BINARY_DIR}/fortran/MagInt
+                  ${CMAKE_BINARY_DIR}/python/hubbardI
+                COMMAND_ERROR_IS_FATAL ANY)
 
