@@ -80,10 +80,10 @@ The compilation of ``MagInt`` can be configured using CMake-options::
 +=================================================================+===============================================+
 | Specify an installation path other than path_to_triqs           | -DCMAKE_INSTALL_PREFIX=path_to_magint         |
 +-----------------------------------------------------------------+-----------------------------------------------+
+| Build in Debugging Mode                                         | -DCMAKE_BUILD_TYPE=Debug                      |
++-----------------------------------------------------------------+-----------------------------------------------+
 | Build the documentation                                         | -DBUILD_DOC=ON                                |
 +-----------------------------------------------------------------+-----------------------------------------------+
 
-``CMAKE_BUILD_TYPE`` is not configurable on the command line: ``CMakeLists.txt``
-sets it to ``Release`` unconditionally, which overrides any value passed to
-``cmake``. The test suite is likewise always configured, so there is no option
-to disable it.
+The build type defaults to ``Release`` when none is given. The test suite is
+always configured, so there is no option to disable it.
