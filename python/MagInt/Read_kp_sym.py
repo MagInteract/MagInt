@@ -14,8 +14,8 @@
 import triqs.utility.mpi as mpi
 from numpy import *
 import numpy as np
-from triqs_dft_tools.converters.plovasp.vaspio import Kpoints
-from triqs_dft_tools.converters.plovasp.vaspio import Poscar
+from triqs_dftkit.vasp.plovasp.vaspio import Kpoints
+from triqs_dftkit.vasp.plovasp.vaspio import Poscar
 
 class read_kp_sym:
     """
