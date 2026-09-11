@@ -66,6 +66,11 @@ string(REPLACE "import _hubbard_I" "from . import _hubbard_I" modified_content "
 # Write the modified content back to the file
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/hubbard_I.py" "${modified_content}")
 
-set(PYTHON_LIB_DEST ${TRIQS_PYTHON_LIB_DEST_ROOT}/${PROJECT_NAME})
+# The python sources import the generated wrapper as `hubbardI.hubbard_I`, so
+# install it and its extension module as a `hubbardI` package. This mirrors the
+# layout the build tree already exposes through the symlink made in python/MagInt.
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/__init__.py "")
+set(PYTHON_LIB_DEST ${TRIQS_PYTHON_LIB_DEST_ROOT}/hubbardI)
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/${FILE_NAME} DESTINATION ${PYTHON_LIB_DEST})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/hubbard_I.py DESTINATION ${PYTHON_LIB_DEST})
+install (FILES ${CMAKE_CURRENT_BINARY_DIR}/__init__.py DESTINATION ${PYTHON_LIB_DEST})
