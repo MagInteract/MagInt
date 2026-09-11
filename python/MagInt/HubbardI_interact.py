@@ -400,7 +400,7 @@ class HubbardI_interact(Solver):
             ealmat['ud'][Nlm:2 * Nlm, Nlm:2 * Nlm] = eal['down']
         nlms=ealmat['ud'].shape[0]
         nlm=int(nlms/2)
-        if rmat.shape[0]==nlm:
+        if rmat is not None and rmat.shape[0]==nlm:
             # only orbital-space rotation is given (no SO)
             rmat_tmp=rmat.copy()
             rmat=np.zeros((nlms,nlms),complex)
