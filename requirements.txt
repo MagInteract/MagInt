@@ -1,4 +1,6 @@
 f90wrap
 python3
-triqs.3.1.x
+triqs.4.0.x
+triqs_dft_tools.4.0.x
+triqs_dftkit.4.0.x
 lapack
