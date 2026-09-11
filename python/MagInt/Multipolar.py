@@ -13,7 +13,7 @@
 # ------------------------------------------------------------------------------------#
 import triqs.utility.mpi as mpi
 from h5 import *
-from scipy import floor, sqrt
+from numpy import floor, sqrt
 from scipy.special import factorial
 import numpy as np
 
