@@ -7,11 +7,11 @@
 
 Copyright (C) 2012-2025: Leonid V. Pourovskii, 2023-2025: Dario Fiore Mosca
 
-This program implements the force-theorem Hubbard-I (FT-HI) approach to calculation of intersite exchange interactions in correlated insulators. The formalism is given in L. V. Pourovskii Phys. Rev. B 94, 115117 (2016). It is a post-processing program that works on top of a fully converged DFT+HI calculation, and for this purpose it is interfaced with the [TRIQS](https://triqs.github.io/triqs/latest/) software library, and the DFT code interface [TRIQS/DFTTools](https://triqs.github.io/dft_tools/latest/). 
+This program implements the force-theorem Hubbard-I (FT-HI) approach to calculation of intersite exchange interactions in correlated insulators. The formalism is given in L. V. Pourovskii Phys. Rev. B 94, 115117 (2016). It is a post-processing program that works on top of a fully converged DFT+HI calculation, and for this purpose it is interfaced with the [TRIQS](https://triqs.github.io/triqs/latest/) software library, and the DFT code interface [TRIQS/DFTTools](https://triqs.github.io/dft_tools/latest/), whose DFT converters are provided by [TRIQS/dftkit](https://triqs.github.io/dftkit/latest/) from version 4.0 onwards. 
 
 MagInt has been interfaced with the following bandstructure codes: [Wien2k](http://www.wien2k.at) version 13 to 15.  [VASP](https://www.vasp.at) version 6.3.0 or above (WARNING The VASP interface is experimental and has undergone limited testing. If you plan to use it, please contact the authors for further information or assistance.).
 
-MagInt works with python < 3.12. 
+MagInt works with python 3 and is tested with python 3.12. 
 
 ### Documentation & tutorials
 
@@ -72,7 +72,7 @@ python /path/to/MagInt/main.py magint
 
 ---
 
-Please make sure that you have a valid TRIQS and TRIQS/DFTTools installation matching the required versions for MagInt. 
+Please make sure that you have valid TRIQS, TRIQS/DFTTools and TRIQS/dftkit installations matching the required versions for MagInt. 
 
 Within the current version of MagInt we provide FORTRAN Hubbard-I solver. 
 
