@@ -350,7 +350,7 @@ class HubbardI_interact(Solver):
 
     def __set_umatrix(self, U, J, T=None):
         if self.l > 0:
-            Umat = U_matrix(l=self.l, U_int=U, J_hund=J, T=T)
+            Umat = U_matrix_slater(l=self.l, U_int=U, J_hund=J, T=T)
             U, Up = reduce_4index_to_2index(Umat)
         else:
             Umat = np.zeros((1, 1, 1, 1), dtype=float)

@@ -460,7 +460,7 @@ class Solver:
         # l = (Nlm-1)/2
         # If T is specified, it is used to transform the Basis set
         if self.l > 0:
-            Umat = U_matrix(l=self.l, U_int=U, J_hund=J, basis='spherical', T=T)
+            Umat = U_matrix_slater(l=self.l, U_int=U, J_hund=J, basis='spherical', T=T)
             U, Up = reduce_4index_to_2index(Umat)
         else:
             Umat = np.zeros((1, 1, 1, 1), dtype=float)
