@@ -4,7 +4,7 @@
   "name": "MagInt",
   "description": "A TRIQS-based application for calculating intersite exchange interactions in correlated materials from DFT+DMFT calculations.",
   "codeRepository": "https://github.com/MagInteract/MagInt",
-  "license": "https://spdx.org/licenses/GPL-3.0-only.html",
+  "license": "https://spdx.org/licenses/GPL-3.0-or-later.html",
   "programmingLanguage": [
     "Python",
     "Fortran"
